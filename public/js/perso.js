@@ -1,6 +1,7 @@
 const canvas1 = document.getElementById('canvas1');
 const c1ctx = canvas1.getContext('2d');
 
+
 const bgImg = new Image();
 bgImg.src = "images/Album_HONORE_03.png";
 
@@ -8,16 +9,19 @@ const dropzones = document.getElementsByClassName('droppable');
 
 const dropzone = dropzones[0];
 
+const getImageBtn = document.getElementById('getimage');
+const getCanvasBtn = document.getElementById('getcanvas');
+
+
+
 
 let drawImageOnCanvas = function(cnv, ctx, img, sizedowntoratio) {
     let wRatio = cnv.width / img.width;
     let hRatio = cnv.height / img.height;
     let ratio = Math.min(wRatio, hRatio);
     ctx.clearRect(0, 0, cnv.width, cnv.height);
-    if (sizedowntoratio) {
-        ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, img.width*ratio, img.height*ratio);
-    }
-    ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, img.width, img.height);
+    ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, img.width*ratio, img.height*ratio);
+
 }
 
 let createCanvas = function(cnvsId, w, h) {
@@ -42,14 +46,18 @@ const canvas2 = document.getElementById('canvas2');
 const c2ctx = canvas2.getContext('2d');
 
 
-
-const centerImg = new Image();
-centerImg.src = "images/PagePerso/cheetah-5689870_1920.jpg";
-
-centerImg.onload = function () {
+/**
+ * const centerImg = new Image();
+ centerImg.src = "images/PagePerso/cheetah-5689870_1920.jpg";
+ centerImg.onload = function () {
     drawImageOnCanvas(canvas2, c2ctx, centerImg);
 
 }
+ */
+
+
+
+
 
 let cont = document.getElementById('test');
 
@@ -109,8 +117,16 @@ $(document).ready( function () {
                 movable: true,
                 dragMode: 'move',
                 autoCrop: false
-            })
+            });
+            console.log(canvas2Cropper);
 
+            getImageBtn.addEventListener('click', function(e) {
+                if(typeof canvas2Cropper !== "undefined") {
+                    console.log(canvas2Cropper.getImageData());
+                    console.log("hi agin")
+                }
+                console.log("hello");
+            });
         }
         e.target.setAttribute("style", "background-color:unset");
     })
@@ -118,6 +134,16 @@ $(document).ready( function () {
         e.target.setAttribute("style", "background-color:unset");
         console.log("geoo")
     })
+
+    getCanvasBtn.addEventListener('click', function(e) {
+        if(typeof canvas2cropper !== "undefined") {
+            console.log(canvas2cropper.getCanvasData());
+        }
+        console.log("its me");
+        console.log(canvas2cropper.getCanvasData());
+    });
+
+
 
 });
 
