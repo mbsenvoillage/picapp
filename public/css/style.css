@@ -1,0 +1,875 @@
+
+/** FONT IMPORTS **/
+
+@font-face {
+    font-family: RalewayReg;
+    src: url("fonts/Raleway-Regular.ttf");
+}
+
+@font-face {
+    font-family: PrataReg;
+    src: url("fonts/Prata-Regular.ttf");
+}
+
+@font-face {
+    font-family: RalewayBold;
+    src: url("fonts/Raleway-Bold.ttf");
+}
+
+@font-face {
+    font-family: RalewaySemiBold;
+    src: url("fonts/Raleway-SemiBold.ttf");
+}
+
+h2, h3, h4, h5 {
+    font-family: PrataReg, serif;
+}
+
+
+/** Header HP **/
+
+nav.menu a.nav-link, nav.bottom-navbar a {
+    font-family: RalewayReg, sans-serif;
+    transform: scale(.9, .8);
+    font-size: 0.9em;
+    letter-spacing: 0.1em;
+    color: black !important;
+    position: relative;
+    z-index: 2;
+}
+
+nav {
+    padding: 0;
+}
+
+.home-page-header-wrapper {
+    position: relative;
+    padding-bottom: 0;
+}
+
+.home-page-header-wrapper:before {
+    content: "";
+    background:transparent linear-gradient(180deg, rgba(103, 174, 174, 1) 0%, rgba( 255 , 255 , 255 , 0.000 ) 100%) 0% 0% no-repeat padding-box;
+    border-bottom: 0.1em #0F0F0F solid;
+    opacity: 0.5;
+    position: absolute;
+    display: block;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.top-page-banner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #69AFAF;
+    font-family: RalewayReg, sans-serif;
+    color: #ffffff;
+    padding: 0.1em;
+    position: relative;
+}
+
+.top-page-banner p {
+    display: flex;
+    align-items: center;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding: 0.2em;
+}
+
+#logo-honore {
+    margin: auto;
+    width: 60%;
+}
+.logo-wrapper {
+    display: flex;
+
+}
+
+.navbar-header {
+    height: 130px;
+}
+
+.navbar-header.brand {
+    width: 160px;
+    padding-top: 15px;
+    position: absolute;
+    display: block;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.navbar-header.brand img {
+    width: 100%;
+}
+
+.navbar-left {
+    float: left;
+    margin-top: 35px;
+}
+
+header nav .header {
+    position: relative;
+}
+
+.navbar-right {
+    float: right;
+}
+
+.navbar-icons-wrapper {
+    margin-top: 35px;
+
+}
+
+.navbar-icons-wrapper img {
+    width: 1.5rem;
+}
+
+.like-icon-wrapper, .basket-icon-wrapper, .user-icon-wrapper {
+    margin-left: 25px;
+    display: inline-block;
+}
+
+header {
+    border-bottom: 0.1em #0F0F0F solid;
+}
+
+.header::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background:transparent linear-gradient(180deg, rgba(103, 174, 174, 1) 0%, rgba( 255 , 255 , 255 , 0.000 ) 100%) 0% 0% no-repeat padding-box;
+    opacity: 0.5;
+}
+
+.menu {
+    display: flex;
+}
+
+.menu-bottom-wrapper {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    height: 60px;
+    left: -100%;
+    z-index: 39;
+    transition: left .5s cubic-bezier(0,1,.5,1);
+    background-color: rgba(103, 174, 174, 1);
+}
+
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.svg-icon {
+    width: 2em;
+}
+
+.svg-icon path,
+.svg-icon polygon,
+.svg-icon rect {
+    fill: #FFFFFF;
+}
+
+.svg-icon circle {
+    stroke: #4691f6;
+    stroke-width: 1;
+}
+
+
+/* JUMBOTRON HP*/
+
+.hp-jumbo .jumbotron {
+    padding-top: 0;
+    background-color: #FAF5F1;
+    padding-bottom: 0;
+}
+
+#jumbo-pencil {
+    width: 100%;
+}
+
+.pencil-drawing {
+    display: flex;
+}
+
+.jumbo-left-col {
+    display: flex;
+    align-items: center;
+}
+
+.jumbo-image-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+
+.jumbo-left-col h2 {
+    font-family: PrataReg, serif;
+    font-size: 3rem;
+    width: 90%;
+}
+
+.jumbo-left-col p {
+    text-transform: uppercase;
+    font-family: RalewayReg, sans-serif;
+    font-size: 1rem;
+}
+
+button {
+    color: #B3D6D6;
+    background-color: white;
+    font-family: RalewayReg, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 1em;
+    padding: 0.6em 1em;
+    border: 0.1em #B0D1CE solid;
+    border-radius: 0.2em;
+}
+
+.jumbo-text-wrapper {
+    margin-left: 8%;
+    padding: 20px 0 10px 0;
+}
+
+/*  Products & Credo */
+
+.carterie-wrapper, .album-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 50px;
+    width: 100%;
+}
+
+.carterie-wrapper:before, .album-wrapper:before {
+    content: "";
+    opacity: 0.5;
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.carterie-wrapper:before {
+    background:transparent linear-gradient(180deg, rgba(103, 174, 174, 1) 0%, rgba( 255 , 255 , 255 , 0.000 ) 100%) 0% 0% no-repeat padding-box;
+}
+
+.album-wrapper:before {
+    background-color: #FBF8F6;
+}
+
+.text-wrapper {
+    padding: 0 50px 0 50px;
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+
+}
+
+.carterie-wrapper .subtitle, .carterie-wrapper .price, .album-wrapper .subtitle, .album-wrapper .price {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.carterie-wrapper .text-wrapper h3, .album-wrapper .text-wrapper h3 {
+    font-size: 2.5rem;
+    font-family: PrataReg, serif;
+}
+
+.carterie-wrapper .text-wrapper p, .album-wrapper .text-wrapper p {
+    font-family: RalewayReg, sans-serif;
+}
+
+
+
+.carterie-wrapper .image-wrapper {
+    width: 71%;
+    margin-left: 27%;
+    overflow: hidden;
+}
+
+.album-wrapper .image-wrapper {
+    width: 100%;
+    margin-left: 27%;
+    overflow: hidden;
+}
+
+.carterie-wrapper .image-wrapper img {
+    width: 142%;
+    transform: translateX(-12%);
+}
+
+.album-wrapper .image-wrapper img {
+    width: 182%;
+    transform: translateX(-38%);
+}
+
+.products .col-md-12 {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.jumbotron-fluid {
+    margin-bottom: 1rem;
+}
+
+.bandeau-protection-oceans {
+    background-image: url("../images/fond-marin-bandeau.jpg");
+    background-size: cover;
+    display: inline-flex;
+    align-items: center;
+}
+
+.hidden-md-lg img {
+    position: absolute;
+    bottom: 13px;
+    right: 26px;
+    width: 24%;
+}
+
+.hidden-sm img {
+    width: 114px;
+    margin-left: 62%;
+}
+
+.hidden-sm .wrap {
+    padding: 3% 2%;
+    margin-left: 15%;
+    background-color: #FFFFFF;
+    width: 51%;
+}
+
+
+.hidden-sm .wrap h3 {
+    font-size: 2rem;
+    margin-right: 13%;
+    margin-bottom: 10%;
+    font-family: PrataReg, serif;
+}
+
+.hidden-sm .wrap p {
+    font-size: 1rem;
+    margin-right: 4%;
+    padding-right: 100px;
+}
+
+.hidden-sm .wrap button {
+    font-size: 12px;
+    padding: 0.9em;
+    margin-top: 30px;
+    position: absolute;
+}
+
+
+.slogan-planete p {
+    font-size: 3rem;
+    text-align: center;
+    padding: 3% 18% 3% 1%;
+    color: white;
+    font-family: PrataReg, serif;
+}
+
+.slogan-planete {
+    width: 50%;
+}
+
+.card.text-white {
+    width: 90%;
+    margin: 0 auto;
+    margin-bottom: 8%;
+}
+
+.card-img-overlay {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    top: 70%;
+    text-align: center;
+    font-family: RalewaySemiBold, sans-serif;
+    color: #0F0F0F;
+    padding: 0;
+}
+
+.show-on-hover {
+    display: none;
+}
+
+.card-img-overlay p {
+    text-transform: uppercase;
+    color: #69AFAF;;
+}
+
+.row.product-cards, .customer-ratings .row {
+    text-align: center;
+}
+
+.row.product-cards .col-12, .row.product-cards .col-sm-12.col-md-12.col-lg-12.col-xl-3{
+    margin-top: 2%;
+}
+
+.card-title {
+    margin-top: 6%;
+}
+
+.row.product-cards .col-12 h3, .row.personalization-steps .col-12 h3, .customer-ratings .col-12 h3 {
+    font-size: 2rem;
+}
+
+.card-img-overlay hr {
+    margin-top: 0;
+    margin-bottom: 2%;
+    border-color: #0F0F0F;
+    width: 7%;
+}
+
+#product-item-card-display {
+    background: linear-gradient(to bottom, #FFFF 50%, rgba(103, 174, 174, 0.5) 50%);
+}
+
+#product-item-card-display .product-cards {
+    padding-bottom: 60px;
+}
+
+/* HOMEPAGE PRODUCT PERSONALIZATION HOW TO */
+
+.product-personlization-howto .col-6.col-sm-6.col-md-6.col-lg-6.col-xl-2 {
+    display: flex;
+    align-items: center;
+}
+
+.product-personlization-howto {
+    background:transparent linear-gradient(180deg, rgba(103, 174, 174, 0.7) 0%, rgba(103, 174, 174, 0.6) 100%) 0% 0% no-repeat padding-box;
+}
+
+.product-personlization-howto .card {
+    background-color: unset;
+}
+
+.card {
+    border: none;
+}
+
+.row.personalization-steps, .reassurance-list {
+    text-align: center;
+}
+
+.card-img-top {
+    width: 120%;
+    margin: 0 auto;
+}
+
+.product-personlization-howto .col-6.col-sm-6.col-md-6.col-lg-6.col-xl-2, .product-personlization-howto .col-12 {
+    margin-top: 2%;
+
+}
+
+.product-personlization-howto .col-6.col-sm-6.col-md-6.col-lg-6.col-xl-2 {
+    margin-bottom: 5%;
+
+}
+
+
+
+.product-personlization-howto {
+    margin-top: 5%;
+}
+
+.product-personlization-howto .step-num {
+    font-size: 3rem;
+}
+
+.row.personalization-steps .col-12 h3 {
+    font-size: 1.75rem;
+}
+
+.product-personlization-howto .card-body {
+    margin-left: 10%;
+    font-family: RalewaySemiBold, sans-serif;
+    text-transform: uppercase;
+}
+
+.card-body {
+    width: 100%;
+}
+
+.product-personlization-howto .card-body {
+    padding: 0;
+}
+
+.card-body .card-text {
+    margin: 0;
+    font-size: 1vw;
+}
+
+.customer-ratings .row {
+    background-color: #FAF5F1;
+    padding-bottom: 40px;
+}
+
+/* HOMEPAGE PRODUCT CUSTOMER RATINGS */
+
+.fa-star {
+    color: #69AFAF;
+}
+
+.customer-ratings .card-text {
+    font-family: RalewaySemiBold, sans-serif;
+}
+
+
+.customer-ratings .col-12 {
+    margin: 3% 0 3% 0;
+}
+
+.customer-ratings .card-body p:last-child {
+    margin-top: 6%;
+}
+
+
+/* HOMEPAGE PRODUCT REASSURANCE */
+
+.reassurance .card-text {
+    text-transform: uppercase;
+}
+
+.reassurance .card-img-top {
+    width: 35%;
+}
+
+.reassurance {
+    margin-top: 3%;
+}
+
+.reassurance .col-12 h3 {
+    margin-bottom: 2%;
+}
+
+/* FOOTER */
+
+footer, footer .card {
+    background-color: #FAF5F1;
+}
+
+footer .card-img-top {
+    width: 60%
+}
+
+footer .card-text img {
+    width: 12%;
+}
+
+footer ul {
+    list-style: none;
+    text-transform: uppercase;
+}
+
+footer ul h4 {
+    text-transform: initial;
+    font-size: 1.5rem;
+}
+
+.copyright {
+    background:transparent linear-gradient(180deg, rgba(103, 174, 174, 0.7) 0%, rgba(103, 174, 174, 0.6) 100%) 0% 0% no-repeat padding-box;
+    text-align: center;
+    color: #FFFFFF;
+    font-family: RalewayReg, sans-serif;
+}
+
+.copyright p:last-child {
+    text-transform: uppercase;
+    font-family: RalewayBold, sans-serif;
+}
+
+footer .row {
+    padding-top: 4%;
+}
+
+footer .row .row {
+    padding-top: 0;
+}
+
+footer li {
+    letter-spacing: 0.1em;
+    transform: scale(.9, .8);
+    font-size: 0.9em;
+}
+
+footer .row .row .col-md-6:last-child ul, footer .row .row .col-12:last-child ul {
+    margin-top: 9%;
+}
+
+footer .card {
+    text-align: center;
+}
+
+
+/* PRODUCT PAGE */
+
+    /* JUMBOTRON */
+
+.product-page-jumbo .jumbotron {
+    background-color: #FFFFFF;
+    font-family: RalewayReg, sans-serif;
+}
+
+.product-page-jumbo img {
+    width: 100%;
+}
+
+.product-page-jumbo .main-picture-wrapper {
+    margin-bottom: 2%;
+}
+
+.product-page-jumbo .main-picture-wrapper img {
+    background-color: #FAF5F1;
+}
+
+.product-page-jumbo .picture-container {
+    margin-bottom: 5%;
+}
+
+.product-page-jumbo h2 {
+    font-family: PrataReg, serif;
+}
+
+.product-page-jumbo .secondary-picture-wrapper {
+    margin-bottom: 2%;
+}
+
+.product-page-jumbo .specs {
+    font-family: RalewaySemiBold, sans-serif;
+}
+
+.product-page-jumbo .price, .product-page-jumbo .offer {
+    width: fit-content;
+    width: -moz-fit-content;
+    padding: 2px 20px;
+    background:transparent linear-gradient(180deg, rgba(103, 174, 174, 0.7) 0%, rgba(103, 174, 174, 0.6) 100%) 0 0 no-repeat padding-box;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    letter-spacing: 0.2rem;
+}
+
+.product-page-jumbo .offer span {
+    font-size: 0.9rem;
+}
+
+button:hover {
+    background:transparent linear-gradient(180deg, rgba(103, 174, 174, 0.7) 0%, rgba(103, 174, 174, 0.6) 100%) 0 0 no-repeat padding-box;
+    color: #FFFFFF;
+}
+
+.product-personlization-howto.product-page {
+    margin-top: 0;
+}
+
+
+/* PAGE PERSONNALISATION PRODUIT */
+
+.page-perso .navbar-toggle {
+    position: relative;
+    display: block;
+}
+
+.page-perso .header-icon img {
+    width: 50px;
+}
+
+.page-perso .menu {
+    position: absolute;
+    bottom: 0;
+    background: white;
+    width: 100%;
+    flex-direction: column;
+    top: 130px;
+    z-index: 3;
+    justify-content: space-evenly;
+    transition: left .5s cubic-bezier(0,1,.5,1);
+    left: -100%;
+}
+
+.page-perso header {
+    position: static;
+}
+
+.page-perso .nav-link {
+    text-align: center;
+}
+
+.page-perso .pull-sidebar {
+    left: 0;
+
+}
+
+.page-perso .pull-bottom-navbar {
+    left: 0;
+}
+
+.page-perso .bottom-navbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.page-perso .navbar-toggle {
+    border: none;
+    background: none;
+    cursor: pointer;
+    display: block;
+}
+
+.page-perso .navbar-toggle:focus {
+    outline: none;
+}
+
+.page-perso .show, .visible {
+    display: block;
+}
+
+.page-perso .hide, .hidden {
+    display: none;
+}
+
+.page-perso-zone-edition-main-container {
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.page-perso-barre-latérale {
+    width: 380px;
+    border: black 1px solid;
+    position: absolute;
+    height: 100vh;
+    overflow: auto;
+}
+
+.page-perso-espace-travail {
+    border: black 1px solid;
+    width: calc(100% - 380px);
+    position: relative;
+    margin-left: 380px;
+    height: 100%;
+    background-color: rgba(206, 231, 231, 0.2);
+    overflow: auto;
+}
+
+.page-perso-barre-latérale-photo-container-theme-selection {
+    flex-direction: column;
+}
+
+.page-perso-barre-latérale-theme-selection-title, .page-perso-barre-latérale-theme-selection-photo-container, .page-perso-barre-latérale-photo-container-theme-selection, .page-perso-barre-latérale-photo-selection-title {
+    display: flex;
+}
+
+.page-perso-barre-latérale-theme-selection-photo-container {
+    justify-content: space-evenly;
+}
+
+.theme-photo-medaillon {
+    width: 100px;
+    height: 100px;
+    background-color: #B3D6D6;
+    border-radius: 60px;
+}
+
+.theme-name-txt {
+    text-align: center;
+}
+
+.theme-2, .theme-1 {
+    padding: 10px;
+}
+
+.page-perso-barre-latérale-photo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.page-perso-barre-latérale-buttons-container {
+    position: fixed;
+    bottom: 1px;
+    display: flex;
+    height: 100px;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.page-perso-barre-latérale-buttons-container button {
+    letter-spacing: initial;
+    padding: 2px;
+}
+.page-perso-barre-latérale-buttons-container .button-wrapper {
+    padding: 8px;
+}
+
+.photo-grid-photo {
+    width: 100px;
+    height: 100px;
+    background-color: #B0D1CE;
+    margin-bottom: 10px;
+}
+
+.photo-grid-photo-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-bottom: 100px;
+    justify-content: space-between;
+}
+
+.page-perso-barre-latérale-photo-container-photo-selection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.page-perso-barre-latérale-photo-selection-photo-grid-container {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+}
+
+.photo-grid-photo img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+}
+
+#canvas1 {
+    position: absolute;
+}
+
+#canvas2 {
+    position: absolute;
+    border-radius: 8px;
+    display: block;
+    max-width: 100%;
+}
+
+.canvas-container {
+    width: 270px;
+    height: 376px;
+    position: absolute;
+    left: 165px;
+    top: 78px;
+    border-radius: 8px;
+}
+
+.draggable-zone {
+    width: 600px;
+    height: 600px;
+    left: 30%;
+    top: 30%;
+    position: absolute;
+}
+

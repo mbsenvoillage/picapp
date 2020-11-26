@@ -1,0 +1,423 @@
+
+@media only screen and (min-width: 1460px) {
+    .navbar-toggle {
+        display: none;
+    }
+
+    .menu {
+        justify-content: center;
+    }
+
+    .menu-bottom-wrapper {
+        display: none;
+    }
+}
+
+
+@media only screen and (max-width: 1460px) {
+    .navbar-toggle {
+        position: relative;
+        display: block;
+    }
+
+    .header-icon img {
+        width: 50px;
+    }
+
+    .menu {
+        position: absolute;
+        bottom: 0;
+        background: white;
+        width: 100%;
+        flex-direction: column;
+        top: 130px;
+        z-index: 3;
+        justify-content: space-evenly;
+        transition: left .5s cubic-bezier(0,1,.5,1);
+        left: -100%;
+    }
+
+    header {
+        position: static;
+    }
+
+    .nav-link {
+        text-align: center;
+    }
+
+    .pull-sidebar {
+        left: 0;
+
+    }
+
+    .pull-bottom-navbar {
+        left: 0;
+    }
+
+    .bottom-navbar {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .navbar-toggle {
+        border: none;
+        background: none;
+        cursor: pointer;
+    }
+
+    .navbar-toggle:focus {
+        outline: none;
+    }
+
+    .show, .visible {
+        display: block;
+    }
+
+    .hide, .hidden {
+        display: none;
+    }
+
+
+
+}
+
+@media screen and (min-width: 576px) {
+    .icons-container .menu-icon {
+        margin-top: 0;
+    }
+
+    .icons-container {
+        margin-right: 0;
+    }
+
+    .icons-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .navbar-wrapper {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    #logo-honore {
+        margin: 0;
+    }
+}
+
+
+@media screen and (min-width: 576px) {
+    #logo-honore {
+        margin: auto;
+    }
+}
+
+@media screen and (max-width: 576px){
+    .hidden-md {
+        display: none;
+    }
+
+    .navbar-header.brand {
+        width: 130px;
+    }
+
+    footer .row .row .col-md-6:last-child ul, footer .row .row .col-12:last-child ul {
+        margin-top: 0;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .like-icon-wrapper {
+        display: none;
+    }
+}
+
+/* Jumbotron text size*/
+
+@media screen and (min-width: 1338px) {
+    .jumbo-left-col h2 {
+        font-size: 3.5rem;
+        max-width: 80%;
+    }
+
+    .jumbo-left-col p {
+        font-size: 1.5rem;
+        max-width: 70%;
+    }
+
+    .jumbo-left-col button {
+
+        font-size: 1.2rem;
+    }
+}
+
+@media screen and (max-width: 1006px) {
+    .jumbo-left-col h2 {
+        font-size: 2.5rem;
+    }
+
+}
+
+@media screen and (max-width: 930px) {
+    .jumbo-left-col h2 {
+        font-size: 2rem;
+    }
+
+}
+
+/*  Products & Credo */
+
+@media screen and (max-width: 580px) {
+
+    .carterie-wrapper .text-wrapper, .album-wrapper .text-wrapper {
+        z-index: 3;
+        padding: 0 0 0 16px;
+        width: 100%;
+    }
+
+    .text-wrapper h3 {
+        font-size: 24px !important;
+
+    }
+
+
+    .carterie-wrapper .text-wrapper p, .album-wrapper .text-wrapper p {
+        font-size: 10px;
+        margin-bottom: 0.6rem;
+
+    }
+
+     .carterie-wrapper button, .album-wrapper button {
+        font-size: 12px;
+         padding: 0.5rem;
+    }
+
+}
+
+@media screen and (min-width: 1010px) {
+    .products .col-md-12 {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .jumbotron-fluid {
+        margin-bottom: 2rem;
+    }
+
+    .products .livre-col {
+        padding-right: 15px;
+    }
+
+    .hidden-md-lg {
+        display: none;
+    }
+
+    .hidden-sm {
+        display: block;
+    }
+
+    .row.products {
+        margin-bottom: 40px;
+    }
+
+}
+
+@media screen and (min-width: 1500px) {
+    .products .carterie-col {
+        padding-left: 105px;
+        padding-right: 20px;
+    }
+
+    .products .livre-col {
+        padding-left: 40px;
+        padding-right: 105px;
+    }
+    .card-img-overlay:hover {
+        top: 40% !important;
+    }
+
+}
+
+@media screen and (min-width: 1200px) {
+
+
+    .card-img-overlay {
+        overflow: hidden;
+        transition: top .7s cubic-bezier(0,1,.5,1);
+    }
+
+    .card-img-overlay:hover {
+        top: 18%;
+        transition: top .7s cubic-bezier(0,1,.5,1), font-size .5s ease;
+        font-size: larger;
+        -webkit-transition: top .7s cubic-bezier(0,1,.5,1), font-size .5s ease;
+        -moz-transition: top .7s cubic-bezier(0,1,.5,1), font-size .5s ease;
+        -o-transition: top .7s cubic-bezier(0,1,.5,1), font-size .5s ease;
+    }
+
+    .search-icon {
+        border: solid 1px rgba(103, 174, 174, 0.7);
+        border-radius: 20px;
+        padding: 5px;
+        background: rgba(103, 174, 174, 0.7);
+    }
+
+    .search-icon path {
+        fill: #FFFFFF;
+    }
+
+    .card-icons svg path {
+        fill: #0F0F0F;
+    }
+
+    .show-on-hover p {
+        text-transform: initial;
+        color: #0F0F0F;
+        font-family: RalewayReg, sans-serif;
+        font-size: 13px;
+    }
+
+    .card-icons {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .carterie-wrapper, .album-wrapper {
+        margin-bottom: 1rem;
+    }
+
+    .card.text-white {
+        width: 60%;
+    }
+
+    .row.product-cards .col-12 h3 {
+        font-size: 1.85rem;
+    }
+
+    .row.personalization-steps .card-img-top {
+        width: 80%;
+    }
+
+
+    .row.personalization-steps .card-body {
+        margin-left: 0;
+    }
+
+    .row.personalization-steps .card-text {
+        font-size: 2vw;
+    }
+}
+
+@media screen and (max-width: 414px) {
+    .hidden-md-lg .wrap {
+        padding: 40px;
+    }
+
+    .hidden-md-lg .wrap h3 {
+        font-size: 20px;
+
+    }
+
+    .hidden-md-lg .wrap p {
+        font-size: 12px;
+    }
+
+    .hidden-md-lg .wrap button {
+        font-size: 12px;
+        padding: 0.9em;
+    }
+
+    .card.text-white {
+        width: 90%;
+    }
+
+    .card-title {
+        margin-top: 2%;
+    }
+
+}
+
+@media screen and (min-width: 414px) {
+    .hidden-md-lg .wrap {
+        padding: 20%;
+    }
+}
+
+@media screen and (max-width: 1500px) {
+    .customer-ratings .card-text {
+        font-size: 1.2vw;
+    }
+
+}
+
+@media screen and (max-width: 1009px) {
+    .hidden-sm {
+        display: none;
+    }
+
+    .slogan-planete {
+        margin: 0 auto;
+    }
+
+    .slogan-planete p {
+        font-size: 2rem;
+        padding-right: 0;
+        padding-top: 20px;
+    }
+
+    .hidden-md-lg h3 {
+        font-family: PrataReg, serif;
+    }
+    .hidden-md-lg p {
+        font-family: RalewayReg, sans-serif;
+    }
+
+}
+
+@media screen and (max-width: 992px) {
+    .customer-ratings .card-text {
+        font-size: 2.8vw;
+    }
+
+    .customer-ratings .card {
+        width: 60%;
+        margin: 0 auto;
+        padding: 0;
+        margin-bottom: 5%;
+    }
+
+    .reassurance .card-text {
+        font-size: 2.3vw;
+    }
+
+    footer .card-img-top {
+        width: 30%;
+    }
+
+    footer .card-text img {
+        width: 6%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .row.personalization-steps .col-sm-12 {
+        justify-content: center;
+    }
+
+    .row.personalization-steps .card-text {
+        font-size: 3vw;
+    }
+}
+
+
+@media screen and (min-width: 992px){
+    .reassurance .card-img-top {
+        width: 30%;
+    }
+}
