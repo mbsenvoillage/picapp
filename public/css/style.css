@@ -856,16 +856,6 @@ button:hover {
     max-width: 100%;
 }
 
-.window {
-    width: 270px;
-    height: 376px;
-    position: absolute;
-    left: 165px;
-    top: 78px;
-    border-radius: 8px;
-}
-
-/*
 .canvas-container {
     width: 270px;
     height: 376px;
@@ -875,10 +865,7 @@ button:hover {
     border-radius: 8px;
 }
 
- */
-
-
-.draggable-zone, .canvas-container {
+.draggable-zone {
     width: 600px;
     height: 600px;
     left: 30%;

@@ -11,7 +11,7 @@ const dropzone = dropzones[0];
 
 const getImageBtn = document.getElementById('getimage');
 const getCanvasBtn = document.getElementById('getcanvas');
-
+const replaceBtn = document.getElementById('replaceimage');
 
 
 
@@ -85,6 +85,8 @@ function drop_handler(e) {
 
 let canvas2cropper;
 
+let zoom;
+
 $(document).ready( function () {
     const elements = document.getElementsByClassName('draggable');
 
@@ -116,36 +118,54 @@ $(document).ready( function () {
                 zoomable: true,
                 movable: true,
                 dragMode: 'move',
-                autoCrop: false
+                autoCrop: false,
+                zoom(e) {
+                    if(e.detail.ratio > e.detail.oldRatio) {
+                        callback(e.detail.ratio);
+                    }
+                }
             });
-            console.log(canvas2Cropper);
+
 
             getImageBtn.addEventListener('click', function(e) {
                 if(typeof canvas2Cropper !== "undefined") {
                     console.log(canvas2Cropper.getImageData());
-                    console.log("hi agin")
                 }
-                console.log("hello");
+            });
+
+            replaceBtn.addEventListener('click', function (e) {
+                canvas2Cropper.replace(img.src);
+            })
+
+            getCanvasBtn.addEventListener('click', function(e) {
+                if(typeof canvas2Cropper !== "undefined") {
+                    console.log(canvas2Cropper.getCanvasData());
+                }
             });
         }
         e.target.setAttribute("style", "background-color:unset");
     })
+
+
     dropzone.addEventListener('dragleave', function(e) {
         e.target.setAttribute("style", "background-color:unset");
         console.log("geoo")
     })
 
-    getCanvasBtn.addEventListener('click', function(e) {
-        if(typeof canvas2cropper !== "undefined") {
-            console.log(canvas2cropper.getCanvasData());
-        }
-        console.log("its me");
-        console.log(canvas2cropper.getCanvasData());
-    });
+    if(typeof zoom !== 'undefined') {
+        console.log(zoom)
+    }
+
 
 
 
 });
+let ratio;
+
+function callback(rati) {
+    ratio = rati;
+    console.log(ratio);
+}
 
 
 

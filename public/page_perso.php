@@ -75,6 +75,7 @@
     <div class="page-perso-espace-travail" id="test">
         <button id="getcanvas">Get canvas data</button>
         <button id="getimage">Get image data</button>
+        <button id="replaceimage">Replace Image</button>
 
         <div class="espace-travail-single-page-main-container">
             <div class="espace-travail-single-page-content-container">
@@ -85,11 +86,9 @@
 
                             </canvas>
                             <div class="canvas-container">
-                                <div class="window">
-                                    <canvas class="droppable" id="canvas2" width="270" height="376">
+                                    <img class="droppable" id="canvas2" width="270" height="376">
 
-                                    </canvas>
-                                </div>
+                                    </img>
 
                             </div>
 
