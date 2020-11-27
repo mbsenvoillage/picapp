@@ -7,6 +7,8 @@ const c2ctx = canvas2.getContext('2d');
 const page13 = new Image();
 page13.src = "images/livre-Honore-13.png";
 
+const testImg = new Image()
+
 
 const bgImg = new Image();
 bgImg.src = "images/Album_HONORE_03.png";
@@ -85,6 +87,8 @@ function drop_handler(e) {
 
 let htmlImgTag;
 
+let imgidx = 0;
+
 $(document).ready( function () {
 
     // Associate handler to dragstart event for all items from draggable class + give those pics an ID
@@ -113,107 +117,127 @@ $(document).ready( function () {
         dropzones[i].addEventListener('dragleave', function(e) {
             e.target.setAttribute("style", "background-color:unset");
         })
-    }
 
-    // What happens when user drops picture on drop area ? Well, happens inside of here
-    dropzone.addEventListener('drop', function (e) {
-        //e.preventDefault();
+        // What happens when user drops picture on drop area ? Well, happens inside of here
+        dropzones[i].addEventListener('drop', function (e) {
+            e.preventDefault();
 
+            var currCropper;
+            var currEl = e.currentTarget.firstElementChild;
+            if(e.currentTarget.firstElementChild) {
+                var i = e.currentTarget.firstElementChild.id;
+                currCropper = cropperInstanceStore[i];
+            }
 
-         if(typeof htmlImgTag == 'undefined') {
-             htmlImgTag = createHtmlImgTag("droppable");
-             htmlImgTag.id = "someid";
-             e.target.appendChild(htmlImgTag);
-             console.log("I'm in here")
-        }
+            (function encapsulateCropper(cb1, cb2) {
 
-
-        // Get the url of the dragged picture, then create image object
-        // and assign to the src attribute the value of the url
-        let url = e.dataTransfer.getData('URL');
-        let img = new Image();
-        img.src = url;
-
-        // If there is a cropper object that is there (ie: if the user had already dropped a picture)
-        // destroy it, since we'll create a new one.
-        // However, we'll need to change that, since cropper has a "replace" method, which is less memory hungry
-        if (typeof canvas2Cropper !== 'undefined') {
-            canvas2Cropper.destroy();
-        }
+                if(!e.currentTarget.firstElementChild) {
+                    var htmlImgTag = createHtmlImgTag("droppable");
+                    htmlImgTag.id = imgidx;
+                    htmlImgTag.setAttribute("style", "display: block; max-width: 100%");
+                    e.target.appendChild(htmlImgTag);
+                    console.log("I'm in here")
+                    console.log();
+                }
 
 
-        // When the user drops the picture on the drop area, we created a new image object
-        // we gave it a src attribute
-        // However, img takes time to load, so we use the asynchronous method onload
-        img.onload = () => {
+                // Get the url of the dragged picture, then create image object
+                // and assign to the src attribute the value of the url
+                var url = e.dataTransfer.getData('URL');
+                var img = new Image();
+                img.src = url;
+
+                // If there is a cropper object that is there (ie: if the user had already dropped a picture)
+                // destroy it, since we'll create a new one.
+                // However, we'll need to change that, since cropper has a "replace" method, which is less memory hungry
 
 
-            // We give to the html img tag the src of the newly created image object
-            htmlImgTag.setAttribute("src", img.src);
 
-            // We initilialise a new instance of a cropper object
-            canvas2Cropper = new Cropper(htmlImgTag, {
-                viewMode: 0,
-                data: {},
-                zoomable: true,
-                movable: true,
-                dragMode: 'move',
-                autoCrop: false,
-                zoom(e) {
-                    if(e.detail.ratio > e.detail.oldRatio) {
-                        callback(e.detail.ratio);
+                // When the user drops the picture on the drop area, we created a new image object
+                // we gave it a src attribute
+                // However, img takes time to load, so we use the asynchronous method onload
+                img.onload = () => {
+
+                    if (currEl) {
+                        cropperInstanceStore[i].replace(img.src);
+                        console.log("hey")
+                    } else {
+                        // We give to the html img tag the src of the newly created image object
+                        htmlImgTag.setAttribute("src", img.src);
+
+                        // We initilialise a new instance of a cropper object
+                        var canvas2Cropper = new Cropper(htmlImgTag, {
+                            viewMode: 0,
+                            data: {},
+                            zoomable: true,
+                            movable: true,
+                            dragMode: 'move',
+                            background: false,
+                            autoCrop: false,
+                            zoom(e) {
+                                if(e.detail.ratio > e.detail.oldRatio) {
+                                    callback(e.detail.ratio);
+                                }
+                            },
+                            cropBoxResizable: false,
+                            zoomOnWheel: false,
+                            toggleDragModeOnDblclick: false,
+                            ready(event) {
+                                canvas2Cropper.zoomTo(0.4);
+                            }
+                        });
                     }
-                },
-                cropBoxResizable: false,
-                zoomOnWheel: false,
-                toggleDragModeOnDblclick: false,
-            });
 
-        }
+                    if(!currEl) {
+                        cb2(canvas2Cropper, imgidx);
+                    }
 
-        // After the user drops the picture, we get rid of the red background color we used to signify the drop area
-        // when he dragged his image over it
-        e.target.setAttribute("style", "background-color:unset");
 
-        // Gets image data from cropper (essentially, width + height)
-        getImageBtn.addEventListener('click', function(e) {
-            if(typeof canvas2Cropper !== "undefined") {
-                console.log(canvas2Cropper.getImageData());
-            }
-        });
+                }
 
-        // Replaces img in cropper
-        replaceBtn.addEventListener('click', function (e) {
-            canvas2Cropper.replace(img.src);
-            canvas2Cropper.zoomTo(0);
+                // After the user drops the picture, we get rid of the red background color we used to signify the drop area
+                // when he dragged his image over it
+                e.target.setAttribute("style", "background-color:unset");
+
+                // Gets image data from cropper (essentially, width + height)
+                getImageBtn.addEventListener('click', function(e) {
+                    if(currCropper) {
+                        console.log(currCropper.getImageData());
+                    }
+                });
+
+                // Replaces img in cropper
+                replaceBtn.addEventListener('click', function (e) {
+                    currCropper.replace(img.src);
+                    currCropper.zoomTo(0.5);
+                })
+
+                // Gets canvas data from cropper (essentially x and y position of image within canvas)
+                getCanvasBtn.addEventListener('click', function(e) {
+                    if(currCropper) {
+                        console.log(currCropper.getCanvasData());
+                    }
+                });
+
+                // When user clicks zoom back, well, it zooms back
+                zoombckwrd.addEventListener('click', function () {
+                    if(currCropper) {
+                        currCropper.zoom(-0.1)
+                    }
+                })
+
+                // When user clicks zoom forward ....
+                zoomfrwd.addEventListener('click', function () {
+                    if(currCropper) {
+                        currCropper.zoom(0.1)
+                    }
+                })
+
+
+
+            })(incrementi(), canvasState);
         })
-
-        // Gets canvas data from cropper (essentially x and y position of image within canvas)
-        getCanvasBtn.addEventListener('click', function(e) {
-            if(typeof canvas2Cropper !== "undefined") {
-                console.log(canvas2Cropper.getCanvasData());
-            }
-        });
-
-        // When user clicks zoom back, well, it zooms back
-        zoombckwrd.addEventListener('click', function () {
-            if(typeof canvas2Cropper !== "undefined") {
-                canvas2Cropper.zoom(-0.1)
-            }
-        })
-
-        // When user clicks zoom forward ....
-        zoomfrwd.addEventListener('click', function () {
-            if(typeof canvas2Cropper !== "undefined") {
-                canvas2Cropper.zoom(0.1)
-            }
-        })
-    })
-
-
-
-
-
+    }
 
 });
 
@@ -224,6 +248,17 @@ function callback(rati) {
     ratio = rati;
     console.log(ratio);
 }
+
+function incrementi() {
+    imgidx++;
+}
+
+function canvasState(canvas, idx) {
+    cropperInstanceStore[idx] =  canvas;
+    console.log(cropperInstanceStore);
+}
+
+let cropperInstanceStore = {};
 
 
 

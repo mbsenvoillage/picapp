@@ -84,11 +84,11 @@
             <div class="espace-travail-single-page-content-container">
                 <div class="single-page-container">
                     <div class="single-page-photo-container">
-                        <div class="draggable-zone droppable">
+                        <div class="draggable-zone">
                             <canvas id="canvas1" width="600" height="600">
 
                             </canvas>
-                            <div class="canvas-container">
+                            <div class="canvas-container droppable">
 
                             </div>
 
@@ -107,7 +107,7 @@
                             <div id="p13-1-container" class="droppable" >
 
                             </div>
-                            <div id="p13-2-container" class="droppable">
+                            <div id="p13-2-container"  style="width: 111px; height: 166px;" class="droppable">
 
                             </div>
                             <div id="p13-3-container" class="droppable">
