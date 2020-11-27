@@ -76,6 +76,9 @@
         <button id="getcanvas">Get canvas data</button>
         <button id="getimage">Get image data</button>
         <button id="replaceimage">Replace Image</button>
+        <button id="zoomback">Go back to previous state</button>
+        <button id="frwd">Zoom avant</button>
+        <button id="bckwd">Zoom arrière</button>
 
         <div class="espace-travail-single-page-main-container">
             <div class="espace-travail-single-page-content-container">
@@ -86,11 +89,40 @@
 
                             </canvas>
                             <div class="canvas-container">
-                                    <img class="droppable" id="canvas2" width="270" height="376">
-
-                                    </img>
 
                             </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="espace-travail-single-page-content-container-2">
+                <div class="single-page-container">
+                    <div class="single-page-photo-container">
+                        <div class="draggable-zone">
+                            <canvas id="canvas2" width="600" height="600">
+
+                            </canvas>
+                            <div id="p13-1-container" class="droppable" >
+
+                            </div>
+                            <div id="p13-2-container" class="droppable">
+
+                            </div>
+                            <div id="p13-3-container" class="droppable">
+
+                            </div>
+                            <div id="p13-4-container" class="droppable">
+
+                            </div>
+                            <div id="p13-5-container" class="droppable">
+
+                            </div>
+                            <div id="p13-6-container" class="droppable">
+
+                            </div>
+
 
                         </div>
                     </div>
