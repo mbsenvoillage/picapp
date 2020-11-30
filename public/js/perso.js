@@ -123,6 +123,13 @@ let dragOverUnsetBackGround = (e) => {
     }
 }
 
+let resetImage = (e) => {
+    if (cropperInstanceStore[clickedCanvasId]) {
+        document.getElementById(clickedCanvasId).remove();
+        cropperInstanceStore[clickedCanvasId].destroy();
+    }
+}
+
 $(document).ready(function () {
 
     // Associate handler to dragstart event for all items from draggable class + give those pics an ID
@@ -156,20 +163,19 @@ forEach(dropzones, el => {
             clickedCanvasId = e.currentTarget.firstElementChild.id;
             //currCropper = cropperInstanceStore[i];
             // Gets image data from cropper (essentially, width + height)
-            setCanvasBtn.addEventListener('click', function (e) {
+            /**
+             * setCanvasBtn.addEventListener('click', function (e) {
                 if (currCropper) {
                     currCropper.setCanvasData(canvasData);
                     console.log(canvasData);
                     console.log("I'm setting canvas data")
                 }
             });
+             */
+
 
             // Replaces img in cropper
-            replaceBtn.addEventListener('click', function (e) {
-                console.log(currCropper);
-                currCropper.reset();
-                currCropper.zoomTo(0.5);
-            })
+            replaceBtn.addEventListener('click', resetImage);
 
             // Gets canvas data from cropper (essentially x and y position of image within canvas)
             getCanvasBtn.addEventListener('click', function (e) {
