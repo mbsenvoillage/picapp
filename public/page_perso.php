@@ -74,9 +74,8 @@
 
     <div class="page-perso-espace-travail" id="test">
         <button id="getcanvas">Get canvas data</button>
-        <button id="getimage">Get image data</button>
-        <button id="replaceimage">Replace Image</button>
-        <button id="zoomback">Go back to previous state</button>
+        <button id="setcanvas">Set canvas data</button>
+        <button id="replaceimage">Reset Image</button>
         <button id="frwd">Zoom avant</button>
         <button id="bckwd">Zoom arrière</button>
 
