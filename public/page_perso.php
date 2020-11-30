@@ -78,6 +78,9 @@
         <button id="replaceimage">Reset Image</button>
         <button id="frwd">Zoom avant</button>
         <button id="bckwd">Zoom arrière</button>
+        <button id="save">Save</button>
+        <button id="destroyall">Destroy all croppers</button>
+        <button id="reload">Reload save</button>
 
         <div class="espace-travail-single-page-main-container">
             <div class="espace-travail-single-page-content-container">
@@ -87,7 +90,7 @@
                             <canvas id="canvas1" width="600" height="600">
 
                             </canvas>
-                            <div class="canvas-container droppable">
+                            <div class="canvas-container droppable" id="p1-container">
 
                             </div>
 
