@@ -116,20 +116,28 @@ let resetImage = (e) => {
 let destroyAllCropperInstances = () => {
     for(key in cropperInstanceStore) {
         document.getElementById(key).remove();
-        cropperInstanceStore[key].destroy();
-        delete cropperInstanceStore[clickedCanvasId];
+        cropperInstanceStore[key].container.innerHTML = "";
+        //cropperInstanceStore[key].destroy();
+        //delete cropperInstanceStore[clickedCanvasId];
     }
-    //cropperInstanceStore = {};
+    cropperInstanceStore = {};
+    console.log("this is cropper instance store after destroy : " );
     console.log(cropperInstanceStore);
+    console.log("this is cropper instance that has been saved : " );
+    console.log(cropperSavedInstance);
 }
 
 let saveCropperData = (e) => {
-    cropperSavedInstance = cropperInstanceStore;
+
     for(cropper in cropperInstanceStore) {
-        console.log(cropperInstanceStore[cropper].container);
         cropperContainerStore.push(cropperInstanceStore[cropper].container);
+        delete cropperInstanceStore[cropper].action;
     }
-    console.log(cropperSavedInstance);
+    console.log("this is cropper instance in save : " );
+    console.log(cropperInstanceStore);
+    cropperSavedInstance = cropperInstanceStore;
+    console.log("this is cropper saved : ");
+        console.log(cropperSavedInstance);
 }
 
 let cropperSetUp = (htmlEl) => {
@@ -167,9 +175,15 @@ let createHtmlImgTag = function (className, id, styleRules = false) {
 }
 
 let reloadAllSavedCropperInstances = () => {
+    console.log("I'm in the reloading function, outside loop. This is the cropperSavedInstance");
+    console.log(cropperSavedInstance);
+
     for (key in cropperSavedInstance) {
-        let htmlImgTag = createHtmlImgTag("droppable", key, {"display": "block", "max-width": "100%"})
+
+        let htmlImgTag = createHtmlImgTag("droppable", key, {"display": "block", "max-width": "100%"});
+        console.log(htmlImgTag);
         cropperSavedInstance[key].container.appendChild(htmlImgTag);
+        console.log(cropperSavedInstance[key].container);
 
         let img = new Image();
         img.src = cropperSavedInstance[key].originalUrl;
@@ -219,11 +233,13 @@ $(document).ready(function () {
             if (e.currentTarget.firstElementChild) {
                 //let currCropper;
                 clickedCanvasId = e.currentTarget.firstElementChild.id;
+
                 if(clickedContainer !== undefined) {
                     forEach(clickedContainer.childNodes, elem => elem.className === "cropper-container" ? changeElemCssRules(elem, {"border": "none"}) : elem);
                 }
-                clickedContainer = cropperInstanceStore[clickedCanvasId].container;
-                forEach(e.currentTarget.childNodes, elem => elem.className === "cropper-container" ? changeElemCssRules(elem, {"border": "black dotted", "border-radius": "2%"}) : elem);
+                 clickedContainer = cropperInstanceStore[clickedCanvasId].container;
+                 forEach(e.currentTarget.childNodes, elem => elem.className === "cropper-container" ? changeElemCssRules(elem, {"border": "black dotted", "border-radius": "2%"}) : elem);
+
 
                 //currCropper = cropperInstanceStore[i];
 
@@ -261,8 +277,8 @@ $(document).ready(function () {
 
                 // Get the url of the dragged picture, then create image object
                 // and assign to the src attribute the value of the url
-                var url = e.dataTransfer.getData('URL');
-                var img = new Image();
+                let url = e.dataTransfer.getData('URL');
+                let img = new Image();
                 img.src = url;
 
 
@@ -272,9 +288,11 @@ $(document).ready(function () {
                 img.onload = () => {
 
                     if (currEl) {
-                        console.log("cropper instance: " + cropperInstanceStore[i].url);
+
                         cropperInstanceStore[i].replace(img.src);
-                        console.log("hey")
+                        cropperInstanceStore[i].originalUrl = img.src;
+                        console.log(cropperInstanceStore[i])
+                        console.log("cropper instance url: " + cropperInstanceStore[i].url);
                     } else {
                         console.log("I am being initialized")
                         // We give to the html img tag the src of the newly created image object
@@ -314,7 +332,7 @@ function storeCanvasState(canvas, idx) {
     console.log(cropperInstanceStore);
 }
 
-let cropperInstanceStore = {};
-let cropperSavedInstance = {};
-let cropperContainerStore = [];
+var cropperInstanceStore = {};
+var cropperSavedInstance = {};
+var cropperContainerStore = [];
 
