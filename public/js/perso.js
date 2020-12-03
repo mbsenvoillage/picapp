@@ -121,10 +121,6 @@ let destroyAllCropperInstances = () => {
         //delete cropperInstanceStore[clickedCanvasId];
     }
     cropperInstanceStore = {};
-    console.log("this is cropper instance store after destroy : " );
-    console.log(cropperInstanceStore);
-    console.log("this is cropper instance that has been saved : " );
-    console.log(cropperSavedInstance);
 }
 
 let saveCropperData = (e) => {
@@ -133,15 +129,11 @@ let saveCropperData = (e) => {
         cropperContainerStore.push(cropperInstanceStore[cropper].container);
         delete cropperInstanceStore[cropper].action;
     }
-    console.log("this is cropper instance in save : " );
-    console.log(cropperInstanceStore);
     cropperSavedInstance = cropperInstanceStore;
-    console.log("this is cropper saved : ");
-        console.log(cropperSavedInstance);
 }
 
-let cropperSetUp = (htmlEl) => {
-    return new Cropper(htmlEl, {
+let cropperSetUp = async (htmlEl, ratio) => {
+     let cropIns = new Cropper(htmlEl, {
         viewMode: 3,
         data: {},
         zoomable: true,
@@ -150,18 +142,19 @@ let cropperSetUp = (htmlEl) => {
         background: false,
         autoCrop: false,
         zoom(e) {
-            if (e.detail.ratio > e.detail.oldRatio) {
-                callback(e.detail.ratio);
-            }
+            callback(e.detail.ratio, cropIns);
         },
         cropBoxResizable: false,
         zoomOnWheel: false,
         toggleDragModeOnDblclick: false,
         ready(event) {
-            //canvas2Cropper.zoomTo(0.2);
+            if (ratio !== undefined) {
+                cropIns.zoomTo(ratio);
+            }
         },
         minContainerWidth: 100,
     });
+     return cropIns;
 }
 
 let createHtmlImgTag = function (className, id, styleRules = false) {
@@ -174,23 +167,21 @@ let createHtmlImgTag = function (className, id, styleRules = false) {
     return imgtag;
 }
 
-let reloadAllSavedCropperInstances = () => {
-    console.log("I'm in the reloading function, outside loop. This is the cropperSavedInstance");
-    console.log(cropperSavedInstance);
-
+let reloadAllSavedCropperInstances = async () => {
+    let zoomRatios = [];
+    let i = 0;
     for (key in cropperSavedInstance) {
-
+        zoomRatios.push(cropperSavedInstance[key].z);
         let htmlImgTag = createHtmlImgTag("droppable", key, {"display": "block", "max-width": "100%"});
-        console.log(htmlImgTag);
         cropperSavedInstance[key].container.appendChild(htmlImgTag);
-        console.log(cropperSavedInstance[key].container);
 
         let img = new Image();
         img.src = cropperSavedInstance[key].originalUrl;
 
-        img.onload = () => {
+        img.onload = async () => {
             htmlImgTag.setAttribute("src", img.src);
-            let canvas2Cropper = cropperSetUp(htmlImgTag);
+            let canvas2Cropper = await cropperSetUp(htmlImgTag, zoomRatios[i]);
+            i++;
             storeCanvasState(canvas2Cropper, htmlImgTag.id);
         };
     }
@@ -285,21 +276,18 @@ $(document).ready(function () {
                 // When the user drops the picture on the drop area, we created a new image object
                 // we gave it a src attribute
                 // However, img takes time to load, so we use the asynchronous method onload
-                img.onload = () => {
+                img.onload = async () => {
 
                     if (currEl) {
-
                         cropperInstanceStore[i].replace(img.src);
                         cropperInstanceStore[i].originalUrl = img.src;
-                        console.log(cropperInstanceStore[i])
-                        console.log("cropper instance url: " + cropperInstanceStore[i].url);
                     } else {
                         console.log("I am being initialized")
                         // We give to the html img tag the src of the newly created image object
                         htmlImgTag.setAttribute("src", img.src);
 
                         // We initilialise a new instance of a cropper object
-                        let canvas2Cropper = cropperSetUp(htmlImgTag);
+                        let canvas2Cropper = await cropperSetUp(htmlImgTag);
                         currCropper = canvas2Cropper;
                         storeCanvasStateCB(canvas2Cropper, imgidx);
                     }
@@ -318,9 +306,11 @@ $(document).ready(function () {
 let ratio;
 
 // This callback gives us access to the zoom method's state ie. the variable that holds zoom ratio
-function callback(rati) {
+function callback(rati, cropper) {
     ratio = rati;
+    cropper.z = ratio;
     console.log(ratio);
+    console.log(cropper);
 }
 
 function incrementi() {
@@ -330,6 +320,10 @@ function incrementi() {
 function storeCanvasState(canvas, idx) {
     cropperInstanceStore[idx] = canvas;
     console.log(cropperInstanceStore);
+}
+
+function zoomin(r) {
+    return null;
 }
 
 var cropperInstanceStore = {};
