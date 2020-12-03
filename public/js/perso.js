@@ -322,10 +322,6 @@ function storeCanvasState(canvas, idx) {
     console.log(cropperInstanceStore);
 }
 
-function zoomin(r) {
-    return null;
-}
-
 var cropperInstanceStore = {};
 var cropperSavedInstance = {};
 var cropperContainerStore = [];
