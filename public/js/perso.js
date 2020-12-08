@@ -223,16 +223,9 @@ let setDivCssAndAttachToDom = (obj, sizedownratio, page) => {
     }
 }
 
-
-
-
-
 let sizeDownRatio = (sourceImage, canvasHeight) => {
     return sourceImage.height / canvasHeight;
 }
-
-
-
 
 // When user starts to drag image, set what type of html data he's dragging (here, an image)
 
@@ -357,6 +350,7 @@ let reloadAllSavedCropperInstances = async () => {
 
         img.onload = async () => {
             htmlImgTag.setAttribute("src", img.src);
+            console.log("zoom ratio : " + zoomRatios[i]);
             let canvas2Cropper = await cropperSetUp(htmlImgTag, zoomRatios[i]);
             i++;
             storeCanvasState(canvas2Cropper, htmlImgTag.id);
