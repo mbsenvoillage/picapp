@@ -5,11 +5,27 @@ const dragzones = document.getElementsByClassName("draggable-zone"),
     save = document.getElementById("save"),
     destroyAll = document.getElementById("destroyall"),
     reload = document.getElementById("reload"),
-    canvasHeight = 600;
+    canvasHeight = 600,
+    flickleft = document.getElementById("flick-left"),
+    flickright = document.getElementById("flick-right"),
+    page1 = document.getElementById("page-1"),
+    page2 = document.getElementById("page-2"),
+    page3 = document.getElementById("page-3"),
+    page4 = document.getElementById("page-4");
 
 var cropperInstanceStore = {},
     cropperSavedInstance = {},
     cropperContainerStore = [];
+
+let pages = {
+    "1": page1,
+    "2": page2,
+    "3": page3,
+    "4": page4,
+}
+
+let imageFolder = [["Album_HONORE_02.png", 2], ["Album_HONORE_03.png", 1], ["Album_HONORE_05.png", 3], ["livre-Honore-13.png", 4]];
+
 
 // Draws the page mask
 let drawImageOnCanvas = function (cnv, ctx, img, sizedowntoratio) {
@@ -79,24 +95,6 @@ let assignStyle = (el, w, h, top, left, rotate, position) => {
     el.style.position = `${position}`;
 
 }
-
-// Loops through pageinnerframes object (stores w, h, x, y, angle of every pages' inner frames)
-// and applies corresponding css style to divs
-// object should have the following structure (innerframes have a key which corresponds
-// to their position, going left to right, top to bottom)
-// {"page-1" :
-//   {"1" :
-//      {"width" : 10px,
-//      "height" : 10px,
-//      "xpos" : 10px,
-//      "ypos" : 10px,
-//      "angle": 4},
-//   "2" :
-//      {},
-//  },
-//  "page-2" :
-//     {{}},
-// }
 
 let album1 = {
     "page-1" : {
@@ -182,10 +180,28 @@ let album1 = {
     }
 }
 
+
+// Loops through pageinnerframes object (stores w, h, x, y, angle of every pages' inner frames)
+// and applies corresponding css style to divs
+// object should have the following structure (innerframes have a key which corresponds
+// to their position, going left to right, top to bottom)
+// {"page-1" :
+//   {"1" :
+//      {"width" : 10px,
+//      "height" : 10px,
+//      "xpos" : 10px,
+//      "ypos" : 10px,
+//      "angle": 4},
+//   "2" :
+//      {},
+//  },
+//  "page-2" :
+//     {{}},
+// }
+
 let setDivCssAndAttachToDom = (obj, sizedownratio, page) => {
      for(let key in obj) {
          if(key === page) {
-             console.log(key);
              let innerFrames = obj[key];
              let root = document.getElementById(key);
              for(const key2 in innerFrames) {
@@ -195,7 +211,6 @@ let setDivCssAndAttachToDom = (obj, sizedownratio, page) => {
                          frame[key3] /= sizedownratio;
                      }
                  }
-                 console.log(frame);
                  let div = makeDivHtmlTag("droppable",`${key}-${key2}-container`);
                  assignStyle(div, frame.width, frame.height, frame.top, frame.left, frame.angle, "absolute");
                  if(!div) {
@@ -208,22 +223,6 @@ let setDivCssAndAttachToDom = (obj, sizedownratio, page) => {
     }
 }
 
-/*let p2img = makeImg("images/Album_HONORE_02.png"),
-    p3img = makeImg("images/Album_HONORE_05.png")
-    p13img = makeImg("images/livre-Honore-13.png");*/
-
-// p1img = makeImg("images/Album_HONORE_03.png"),
-const page1 = document.getElementById("page-1"),
-    page2 = document.getElementById("page-2"),
-    page3 = document.getElementById("page-3"),
-    page4 = document.getElementById("page-4");
-
-let pages = {
-    "1": page1,
-    "2": page2,
-    "3": page3,
-    "4": page4,
-}
 
 
 
@@ -372,27 +371,6 @@ let changeElemCssRules = (elem, rules) => {
 }
 
 let clickedContainer;
-// When mask from page 1 is loaded, then draw that image on canvas1
-
-/*p2img.onload = function () {
-    let aRatio = aspectRatioCalc(p2img.width, p2img.height);
-    imgToCanvas(p2img, createCanvas("canvas2", aRatio, canvasHeight), page2);
-    //setDivCssAndAttachToDom(album1);
-}
-
-p3img.onload = function () {
-    let aRatio = aspectRatioCalc(p3img.width, p3img.height);
-    imgToCanvas(p3img, createCanvas("canvas3", aRatio, canvasHeight), page3);
-}
-
-p13img.onload = function () {
-    let aRatio = aspectRatioCalc(p13img.width, p13img.height);
-    console.log(`this is aRatio for p13 : ${aRatio}`);
-    console.log(`original photo size : width = ${p13img.width} height = ${p13img.height}`);
-    let dRatio = sizeDownRatio(p13img, canvasHeight);
-    console.log(dRatio);
-    imgToCanvas(p13img, createCanvas("canvas4", aRatio, canvasHeight), page4);
-}*/
 
 let loadImage = url => {
     return new Promise(resolve => {
@@ -404,7 +382,6 @@ let loadImage = url => {
     })
 }
 
-let imageFolder = [["Album_HONORE_02.png", 2], ["Album_HONORE_03.png", 1], ["Album_HONORE_05.png", 3], ["livre-Honore-13.png", 4]];
 
 let changePage = () => {
     let idx = 1;
@@ -434,9 +411,10 @@ let changePage = () => {
 
 let flicker = changePage();
 
-const flickleft = document.getElementById("flick-left");
-const flickright = document.getElementById("flick-right");
 
+// Loads each background image (html tag + src), creates a canvas and draws the loaded image on it
+// with original image aspect ratio (aRatio = w / h)
+// + calculates each inner frame position & size
 let loadCanvasImgs = imageFolder.map((el, i) => {
     return loadImage(`images/${el[0]}`).then(img => {
         let aRatio = aspectRatioCalc(img.width, img.height);
@@ -452,8 +430,10 @@ let loadCanvasImgs = imageFolder.map((el, i) => {
     });
 });
 
+// Stores loaded images and canvases promises
 let results = Promise.all(loadCanvasImgs);
 
+// On fulfillment attach event listeners to inner frames + rest of elements on page
 results.then(() => {
 
     const dropzones = document.getElementsByClassName('droppable');
@@ -566,133 +546,6 @@ results.then(() => {
 })
 
 
-
-/*imageFolder.forEach(el, i => {
-    loadImage(`images/${el[0]}`).then(img => {
-        let aRatio = aspectRatioCalc(img.width, img.height);
-        let page = pages[el[1]];
-        img.setAttribute("data-page", `${el[1]}`);
-        imgToCanvas(img, createCanvas("canvas1", aRatio, canvasHeight), page);
-        return new Promise(resolve => resolve(img));
-    }).then((img) => {
-        let page = img.dataset.page;
-        let dRatio = sizeDownRatio(img, canvasHeight);
-        setDivCssAndAttachToDom(album1, dRatio, pages[page].id);
-        return new Promise(resolve => resolve())
-    }).then(() => {
-
-        const dropzones = document.getElementsByClassName('droppable');
-
-        flickleft.addEventListener('click', flicker);
-        flickright.addEventListener('click', flicker);
-
-        // Store container date on save
-        save.addEventListener('click', saveCropperData);
-        destroyAll.addEventListener('click', destroyAllCropperInstances);
-        reload.addEventListener('click', reloadAllSavedCropperInstances);
-
-        // Associate handler to dragstart event for all items from draggable class + give those pics an ID
-        const draggablePics = document.getElementsByClassName('draggable');
-
-        forEach(draggablePics, (el, i) => {
-            el.addEventListener("dragstart", dragstart_handler);
-            el.setAttribute("id", "pic" + i);
-        })
-
-
-        // Set background color of dropzone to $color to show drop area
-
-        forEach(dragzones, el => {
-            el.addEventListener('dragover', dragOverSetBackGround);
-            el.addEventListener('dragleave', dragOverUnsetBackGround);
-        })
-
-        forEach(dropzones, el => {
-
-            el.addEventListener('click', function (e) {
-                if (e.currentTarget.firstElementChild) {
-                    //let currCropper;
-                    clickedCanvasId = e.currentTarget.firstElementChild.id;
-
-                    if(clickedContainer !== undefined) {
-                        forEach(clickedContainer.childNodes, elem => elem.className === "cropper-container" ? changeElemCssRules(elem, {"border": "none"}) : elem);
-                    }
-                    clickedContainer = cropperInstanceStore[clickedCanvasId].container;
-                    forEach(e.currentTarget.childNodes, elem => elem.className === "cropper-container" ? changeElemCssRules(elem, {"border": "black dotted", "border-radius": "2%"}) : elem);
-
-
-                    //currCropper = cropperInstanceStore[i];
-
-                    // Replaces img in cropper
-                    replaceBtn.addEventListener('click', resetImage);
-
-                    // When user clicks zoom back, well, it zooms back
-                    zoombckwrd.addEventListener('click', zoomOut)
-
-                    // When user clicks zoom forward ....
-                    zoomfrwd.addEventListener('click', zoomIn);
-                }
-            })
-
-
-            el.addEventListener('drop', function (e) {
-                e.preventDefault();
-
-                let currCropper;
-                let currEl = e.currentTarget.firstElementChild;
-                let i;
-                let htmlImgTag;
-                if (e.currentTarget.firstElementChild) {
-                    i = e.currentTarget.firstElementChild.id;
-                    currCropper = cropperInstanceStore[i];
-                }
-
-                (function encapsulateCropper(incrementICB, storeCanvasStateCB) {
-
-                    if (!e.currentTarget.firstElementChild) {
-                        htmlImgTag = createHtmlImgTag("droppable", imgidx, {"display": "block", "max-width": "100%"});
-                        e.target.appendChild(htmlImgTag);
-                    }
-
-
-                    // Get the url of the dragged picture, then create image object
-                    // and assign to the src attribute the value of the url
-                    let url = e.dataTransfer.getData('URL');
-                    let img = new Image();
-                    img.src = url;
-
-
-                    // When the user drops the picture on the drop area, we created a new image object
-                    // we gave it a src attribute
-                    // However, img takes time to load, so we use the asynchronous method onload
-                    img.onload = async () => {
-
-                        if (currEl) {
-                            cropperInstanceStore[i].replace(img.src);
-                            cropperInstanceStore[i].originalUrl = img.src;
-                        } else {
-                            console.log("I am being initialized")
-                            // We give to the html img tag the src of the newly created image object
-                            htmlImgTag.setAttribute("src", img.src);
-
-                            // We initilialise a new instance of a cropper object
-                            let canvas2Cropper = await cropperSetUp(htmlImgTag);
-                            currCropper = canvas2Cropper;
-                            storeCanvasStateCB(canvas2Cropper, imgidx);
-                        }
-                    }
-
-                    e.target.style.backgroundColor = "unset";
-
-                })(incrementi(), storeCanvasState);
-            })
-
-        });
-    })
-})*/
-
-
-
 let ratio;
 
 // This callback gives us access to the zoom method's state ie. the variable that holds zoom ratio
@@ -711,6 +564,3 @@ function storeCanvasState(canvas, idx) {
     cropperInstanceStore[idx] = canvas;
     console.log(cropperInstanceStore);
 }
-
-
-
