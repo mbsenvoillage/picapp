@@ -848,6 +848,7 @@ button:hover {
     object-fit: cover;
 }
 
+/**
 #canvas1 {
     position: absolute;
 }
@@ -858,6 +859,7 @@ button:hover {
     display: block;
     max-width: 100%;
 }
+ */
 
 .canvas-container {
     width: 270px;
@@ -869,21 +871,26 @@ button:hover {
 }
 
 .draggable-zone {
-    width: 600px;
-    height: 600px;
+    /*width: 600px;
+    height: 600px;*/
     left: 30%;
     top: 200px;
     position: absolute;
 }
 
-.espace-travail-single-page-content-container-2 .draggable-zone {
+/**
+#page-2 {
     top: calc(400px + 600px);
 }
+
+ */
+
 
 .espace-travail-single-page-main-container {
     height: 1000px;
 }
 
+/**
 #p13-1-container {
     width: 239.5px;
     height: 161px;
@@ -937,6 +944,9 @@ button:hover {
     transform: rotate(4deg);
 }
 
+ */
+
+
 #controls {
     position: absolute;
     top: 150px;
@@ -951,5 +961,26 @@ button:hover {
 
 .cropper-wrap-box {
     border-radius: 2%;
+}
+
+#album-customization-page-navigation svg path {
+    fill: #B3D6D6;
+}
+
+
+#album-customization-page-navigation svg {
+    width: 4em;
+}
+
+#flick-left {
+    position: absolute;
+    left: 20%;
+    top: 450px;
+}
+
+#flick-right {
+    position: absolute;
+    left: 66%;
+    top: 450px;
 }
 

@@ -99,30 +99,40 @@
             </a>
 
         </div>
+        <div id="album-customization-page-navigation">
+            <a id="flick-left">
+                <svg class="svg-icon" viewBox="0 0 20 20" >
+                    <path d="M11.739,13.962c-0.087,0.086-0.199,0.131-0.312,0.131c-0.112,0-0.226-0.045-0.312-0.131l-3.738-3.736c-0.173-0.173-0.173-0.454,0-0.626l3.559-3.562c0.173-0.175,0.454-0.173,0.626,0c0.173,0.172,0.173,0.451,0,0.624l-3.248,3.25l3.425,3.426C11.911,13.511,11.911,13.789,11.739,13.962 M18.406,10c0,4.644-3.763,8.406-8.406,8.406S1.594,14.644,1.594,10S5.356,1.594,10,1.594S18.406,5.356,18.406,10 M17.521,10c0-4.148-3.373-7.521-7.521-7.521c-4.148,0-7.521,3.374-7.521,7.521c0,4.148,3.374,7.521,7.521,7.521C14.147,17.521,17.521,14.148,17.521,10"></path>
+                </svg>
+            </a>
+            <a id="flick-right">
+                <svg class="svg-icon" viewBox="0 0 20 20">
+                    <path d="M12.522,10.4l-3.559,3.562c-0.172,0.173-0.451,0.176-0.625,0c-0.173-0.173-0.173-0.451,0-0.624l3.248-3.25L8.161,6.662c-0.173-0.173-0.173-0.452,0-0.624c0.172-0.175,0.451-0.175,0.624,0l3.738,3.736C12.695,9.947,12.695,10.228,12.522,10.4 M18.406,10c0,4.644-3.764,8.406-8.406,8.406c-4.644,0-8.406-3.763-8.406-8.406S5.356,1.594,10,1.594C14.643,1.594,18.406,5.356,18.406,10M17.521,10c0-4.148-3.374-7.521-7.521-7.521c-4.148,0-7.521,3.374-7.521,7.521c0,4.147,3.374,7.521,7.521,7.521C14.147,17.521,17.521,14.147,17.521,10"></path>
+                </svg>
+            </a>
+
+        </div>
 
         <div class="espace-travail-single-page-main-container">
+
             <div class="espace-travail-single-page-content-container">
                 <div class="single-page-container">
                     <div class="single-page-photo-container">
-                        <div class="draggable-zone">
-                            <canvas id="canvas1" width="600" height="600">
+                        <div class="draggable-zone" id="page-1">
+                            <!--<div class="canvas-container droppable" id="p1-container">
 
-                            </canvas>
-                            <div class="canvas-container droppable" id="p1-container">
-
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="espace-travail-single-page-content-container-2">
+            <div class="espace-travail-single-page-content-container">
                 <div class="single-page-container">
                     <div class="single-page-photo-container">
-                        <div class="draggable-zone">
-                            <canvas id="canvas2" width="600" height="600">
+                        <div class="draggable-zone" id="page-2" style="display: none">
+                            <!--
 
-                            </canvas>
                             <div id="p13-1-container" class="droppable" >
 
                             </div>
@@ -141,6 +151,71 @@
                             <div id="p13-6-container" class="droppable">
 
                             </div>
+                            -->
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="espace-travail-single-page-content-container">
+                <div class="single-page-container">
+                    <div class="single-page-photo-container">
+                        <div class="draggable-zone" id="page-3" style="display: none">
+                            <!--
+
+                            <div id="p13-1-container" class="droppable" >
+
+                            </div>
+                            <div id="p13-2-container"  style="width: 111px; height: 166px;" class="droppable">
+
+                            </div>
+                            <div id="p13-3-container" class="droppable">
+
+                            </div>
+                            <div id="p13-4-container" class="droppable">
+
+                            </div>
+                            <div id="p13-5-container" class="droppable">
+
+                            </div>
+                            <div id="p13-6-container" class="droppable">
+
+                            </div>
+                            -->
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="espace-travail-single-page-content-container">
+                <div class="single-page-container">
+                    <div class="single-page-photo-container">
+                        <div class="draggable-zone" id="page-4" style="display: none">
+                            <!--
+
+                            <div id="p13-1-container" class="droppable" >
+
+                            </div>
+                            <div id="p13-2-container"  style="width: 111px; height: 166px;" class="droppable">
+
+                            </div>
+                            <div id="p13-3-container" class="droppable">
+
+                            </div>
+                            <div id="p13-4-container" class="droppable">
+
+                            </div>
+                            <div id="p13-5-container" class="droppable">
+
+                            </div>
+                            <div id="p13-6-container" class="droppable">
+
+                            </div>
+                            -->
 
 
                         </div>
