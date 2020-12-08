@@ -131,7 +131,7 @@
             <div class="espace-travail-single-page-content-container">
                 <div class="single-page-container">
                     <div class="single-page-photo-container">
-                        <div class="draggable-zone" id="page-2" style="display: none">
+                        <div class="draggable-zone" id="page-2" style="visibility: hidden">
                             <!--
 
                             <div id="p13-1-container" class="droppable" >
@@ -163,7 +163,7 @@
             <div class="espace-travail-single-page-content-container">
                 <div class="single-page-container">
                     <div class="single-page-photo-container">
-                        <div class="draggable-zone" id="page-3" style="display: none">
+                        <div class="draggable-zone" id="page-3" style="visibility: hidden">
                             <!--
 
                             <div id="p13-1-container" class="droppable" >
@@ -195,7 +195,7 @@
             <div class="espace-travail-single-page-content-container">
                 <div class="single-page-container">
                     <div class="single-page-photo-container">
-                        <div class="draggable-zone" id="page-4" style="display: none">
+                        <div class="draggable-zone" id="page-4" style="visibility: hidden">
                             <!--
 
                             <div id="p13-1-container" class="droppable" >

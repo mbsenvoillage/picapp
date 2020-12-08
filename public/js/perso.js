@@ -387,18 +387,18 @@ let changePage = () => {
             if(idx <= 1) idx = 1;
             else idx--;
             //hide idx++
-            pages[idx+1].style.display = "none";
+            pages[idx+1].style.visibility = "hidden";
             //display idx
-            pages[idx].style.display = "block";
+            pages[idx].style.visibility = "visible";
         }
         if(target === "flick-right"){
             if(idx >= numOfPages) idx = numOfPages;
             else idx++;
             //hide idx--
             console.l
-            pages[idx-1].style.display = "none";
+            pages[idx-1].style.visibility = "hidden";
             //display idx
-            pages[idx].style.display = "block";
+            pages[idx].style.visibility = "visible";
         }
     }
 }
