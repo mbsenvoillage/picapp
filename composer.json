@@ -1,0 +1,20 @@
+{
+    "name": "basesud/honore",
+    "description": "Picture customizing app",
+    "authors": [
+        {
+            "name": "mbsenvoillage",
+            "email": "momboisse.yvn@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "require": {
+      "ext-exif": "*",
+      "ext-pdo": "*",
+        "ext-json": "*"
+    }
+}

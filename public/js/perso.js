@@ -11,7 +11,9 @@ const dragzones = document.getElementsByClassName("draggable-zone"),
     page1 = document.getElementById("page-1"),
     page2 = document.getElementById("page-2"),
     page3 = document.getElementById("page-3"),
-    page4 = document.getElementById("page-4");
+    page4 = document.getElementById("page-4"),
+    saveAlbumForm = document.getElementById("saveAlbumForm"),
+    reloadSavedAlbumForm = document.getElementById("loadSavedAlbum");
 
 var cropperInstanceStore = {},
     cropperSavedInstance = {},
@@ -25,6 +27,7 @@ let pages = {
 }
 
 let imageFolder = [["Album_HONORE_02.png", 2], ["Album_HONORE_03.png", 1], ["Album_HONORE_05.png", 3], ["livre-Honore-13.png", 4]];
+
 
 
 // Draws the page mask
@@ -284,7 +287,7 @@ let resetImage = (e) => {
 }
 
 let destroyAllCropperInstances = () => {
-    for(key in cropperInstanceStore) {
+    for(let key in cropperInstanceStore) {
         document.getElementById(key).remove();
         cropperInstanceStore[key].container.innerHTML = "";
         //cropperInstanceStore[key].destroy();
@@ -295,7 +298,7 @@ let destroyAllCropperInstances = () => {
 
 let saveCropperData = (e) => {
 
-    for(cropper in cropperInstanceStore) {
+    for(let cropper in cropperInstanceStore) {
         cropperContainerStore.push(cropperInstanceStore[cropper].container);
         delete cropperInstanceStore[cropper].action;
     }
@@ -337,13 +340,19 @@ let createHtmlImgTag = function (className, id, styleRules = false) {
     return imgtag;
 }
 
-let reloadAllSavedCropperInstances = async () => {
+let reloadAllSavedCropperInstances = async (store = null) => {
     let zoomRatios = [];
     let i = 0;
+    if(store) {
+        cropperSavedInstance = store;
+    }
     for (key in cropperSavedInstance) {
         zoomRatios.push(cropperSavedInstance[key].z);
         let htmlImgTag = createHtmlImgTag("droppable", key, {"display": "block", "max-width": "100%"});
-        cropperSavedInstance[key].container.appendChild(htmlImgTag);
+
+        let container = document.getElementById(cropperSavedInstance[key].ctnr);
+
+        container.appendChild(htmlImgTag);
 
         let img = new Image();
         img.src = cropperSavedInstance[key].originalUrl;
@@ -359,7 +368,7 @@ let reloadAllSavedCropperInstances = async () => {
 }
 
 let changeElemCssRules = (elem, rules) => {
-    for(rule in rules) {
+    for(let rule in rules) {
         elem.style[rule] = rules[rule];
     }
 }
@@ -374,6 +383,25 @@ let loadImage = url => {
         }
         img.src = url;
     })
+}
+
+let postCropperData = async (url, data) => {
+    const response = await fetch(url, {
+        method: 'POST',
+        mode: 'cors',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        redirect: 'follow',
+        body: JSON.stringify(decycle(data))
+    });
+    return "Posted";
+}
+
+let loadAlbum = async (url) => {
+    return await fetch(url)
+        .then(response => response.json())
 }
 
 
@@ -419,6 +447,7 @@ let loadCanvasImgs = imageFolder.map((el, i) => {
     }).then((img) => {
         let page = img.dataset.page;
         let dRatio = sizeDownRatio(img, canvasHeight);
+        console.log("this dRatio :" + dRatio);
         setDivCssAndAttachToDom(album1, dRatio, pages[page].id);
         return new Promise(resolve => resolve())
     });
@@ -434,6 +463,23 @@ results.then(() => {
 
     flickleft.addEventListener('click', flicker);
     flickright.addEventListener('click', flicker);
+    saveAlbumForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        console.log(cropperInstanceStore);
+
+        postCropperData('../src/api/userpic.php', cropperInstanceStore)
+            .then(data=>console.log(data));
+
+    })
+
+    reloadSavedAlbumForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        loadAlbum('../src/api/userpic.php?album=1')
+            .then(data=>reloadAllSavedCropperInstances(retrocycle(JSON.parse(data))))
+        //console.log(cropperSavedInstance);
+    })
 
     // Store container date on save
     save.addEventListener('click', saveCropperData);
@@ -527,6 +573,10 @@ results.then(() => {
                         // We initilialise a new instance of a cropper object
                         let canvas2Cropper = await cropperSetUp(htmlImgTag);
                         currCropper = canvas2Cropper;
+                        // When converting to JSON, using cycle.js, self-referencing properties in cropperSavedInstance disappear
+                        // like the container, which references a div. To retrieve later the id of the container (used to reload a saved album)
+                        // we store it in the cropper object
+                        canvas2Cropper.ctnr = e.target.id;
                         storeCanvasStateCB(canvas2Cropper, imgidx);
                     }
                 }

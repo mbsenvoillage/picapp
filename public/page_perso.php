@@ -1,4 +1,34 @@
+<?php
 
+require dirname(__DIR__) . '/vendor/autoload.php';
+//set max upload size
+$max = 2000000;
+
+use App\Controller\FileUploader;
+
+
+
+if(isset($_POST['submit']))
+{
+    $destination = '../public/user_pictures/';
+    try {
+        $loader = new FileUploader($destination);
+        $loader->upload('uploadedimage');
+        $msg = $loader->getMessages();
+    }
+    catch (Throwable $t)
+    {
+        echo $t->getMessage();
+    }
+}
+
+
+
+
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,8 +44,8 @@
 
 
 </head>
-<body class="page-perso">
 
+<body class="page-perso">
 
 <div class="page-perso-zone-edition-main-container">
     <div class="page-perso-barre-latérale">
@@ -62,11 +92,14 @@
                 <button>commander</button>
             </div>
             <div class="button-wrapper">
+                <form id="saveAlbumForm" method="post" enctype="multipart/form-data">
+                    <input type="submit" value="Sauvegarder">
+                </form>
                 <button>sauvegarder</button>
             </div>
             <div class="button-wrapper">
-                <button id="img-upload-btn">uploader</button>
-                <input type="file" accept="image/jpeg, image/png" name="uploadedimage" id="img-upload-input" style="display: none">
+                <!--<button id="img-upload-btn">uploader</button>-->
+
             </div>
         </div>
 
@@ -76,6 +109,26 @@
     <div class="page-perso-espace-travail" id="test">
         <button id="destroyall">Destroy all croppers</button>
         <button id="reload">Reload save</button>
+        <form name="upload" action="page_perso.php" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="MAX_FILE_SIZE" value="<?= $max?>">
+            <input type="file" accept="image/jpg, image/png, image/jpeg" name="uploadedimage" id="img-upload-input">
+            <button type="submit" name="submit">Upload</button>
+        </form>
+
+        <form id="loadSavedAlbum" method="get" enctype="multipart/form-data">
+            <input type="submit" value="Load">
+        </form>
+
+        <?php
+        if (isset($msg)) {
+            echo '<ul>';
+            foreach ($msg as $message) {
+                echo "<li>$message</li>";
+            }
+            echo '</ul>';
+        }
+
+        ?>
 
         <div id="controls">
             <a id="frwd">
@@ -237,11 +290,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <script src="dist/cropper.js"></script>
+<script src="js/json-cycle/cycle.js"></script>
 
 <script src="js/app.js"></script>
 <script src="js/perso.js"></script>
 
-<script type="module"  src="js/productCustom/cust-p_ctrl.js"></script>
+<!--<script type="module"  src="js/productCustom/cust-p_ctrl.js"></script>-->
 
 </body>
 </html>

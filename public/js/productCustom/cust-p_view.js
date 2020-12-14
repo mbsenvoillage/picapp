@@ -5,6 +5,7 @@
  **/
 
 
+/*
 class View {
 
     constructor(viewutils) {
@@ -70,7 +71,7 @@ class ViewUtils {
             fReader.readAsDataURL(input.files[0]);
 
 
-            /**
+            /!**
              *  const reader = (file) => {
                 return new Promise((resolve, reject) => {
                     const fReader = new FileReader();
@@ -90,7 +91,7 @@ class ViewUtils {
              readFile(file);
              *
              *
-             */
+             *!/
 
 
         }
@@ -103,3 +104,4 @@ class ViewUtils {
 }
 
 export {ViewUtils};
+*/

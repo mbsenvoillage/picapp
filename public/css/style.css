@@ -969,18 +969,18 @@ button:hover {
 
 
 #album-customization-page-navigation svg {
-    width: 4em;
+    width: 3em;
 }
 
 #flick-left {
     position: absolute;
-    left: 20%;
-    top: 450px;
+    left: 50%;
+    top: 140px;
 }
 
 #flick-right {
     position: absolute;
-    left: 66%;
-    top: 450px;
+    left: 55%;
+    top: 140px;
 }
 
