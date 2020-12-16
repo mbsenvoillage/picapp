@@ -12,6 +12,8 @@ const dragzones = document.getElementsByClassName("draggable-zone"),
     page2 = document.getElementById("page-2"),
     page3 = document.getElementById("page-3"),
     page4 = document.getElementById("page-4"),
+    photogridcontainer = document.getElementsByClassName("photo-grid-photo-container")[0],
+    albumgridcontainer = document.getElementsByClassName("album-grid-container")[0],
     saveAlbumForm = document.getElementById("saveAlbumForm"),
     reloadSavedAlbumForm = document.getElementById("loadSavedAlbum");
 
@@ -82,10 +84,10 @@ let aspectRatioCalc = (imgWidth, imgHeight) => {
 
 
 // Makes div tag for masks innerframes
-let makeDivHtmlTag = (className, id) => {
+let makeDivHtmlTag = (className, id = null) => {
     let div = document.createElement("div");
     div.className = className;
-    div.id = id;
+    if (id) div.id = id;
     return div;
 }
 
@@ -208,6 +210,7 @@ let setDivCssAndAttachToDom = (obj, sizedownratio, page) => {
              let innerFrames = obj[key];
              let root = document.getElementById(key);
              for(const key2 in innerFrames) {
+                 if(parseInt(key2)) {
                  let frame = innerFrames[key2];
                  for(let key3 in frame) {
                      if(key3 !== "angle") {
@@ -221,6 +224,7 @@ let setDivCssAndAttachToDom = (obj, sizedownratio, page) => {
                  } else {
                      root.appendChild(div);
                  }
+             }
              }
          }
     }
@@ -349,7 +353,8 @@ let reloadAllSavedCropperInstances = async (store = null) => {
     for (key in cropperSavedInstance) {
         zoomRatios.push(cropperSavedInstance[key].z);
         let htmlImgTag = createHtmlImgTag("droppable", key, {"display": "block", "max-width": "100%"});
-
+        console.log("this is the container id " + cropperSavedInstance[key]);
+        console.log("this is the container id " + cropperSavedInstance[key].ctnr);
         let container = document.getElementById(cropperSavedInstance[key].ctnr);
 
         container.appendChild(htmlImgTag);
@@ -361,6 +366,7 @@ let reloadAllSavedCropperInstances = async (store = null) => {
             htmlImgTag.setAttribute("src", img.src);
             console.log("zoom ratio : " + zoomRatios[i]);
             let canvas2Cropper = await cropperSetUp(htmlImgTag, zoomRatios[i]);
+            canvas2Cropper.ctnr = cropperSavedInstance[key].ctnr;
             i++;
             storeCanvasState(canvas2Cropper, htmlImgTag.id);
         };
@@ -396,6 +402,7 @@ let postCropperData = async (url, data) => {
         redirect: 'follow',
         body: JSON.stringify(decycle(data))
     });
+    console.log(data);
     return "Posted";
 }
 
@@ -405,7 +412,7 @@ let loadAlbum = async (url) => {
 }
 
 
-let changePage = () => {
+let flicker = (() => {
     let idx = 1;
     let numOfPages = Object.keys(pages).length;
     return (e) => {
@@ -429,36 +436,77 @@ let changePage = () => {
             pages[idx].style.visibility = "visible";
         }
     }
+})();
+
+let extractNum = (str) => {
+    let regex = /[0-9]/;
+    return str.match(regex)[0];
 }
 
-let flicker = changePage();
+let keyfinder = (obj, k, arr) => {
+    if(typeof obj === 'object')
+    {
+        //console.log(obj);
+        if(obj.hasOwnProperty(k)) arr.push(obj[k])
+            for (let key in obj)
+            {
+                keyfinder(obj[key], k, arr);
+            }
+    }
+}
 
 
-// Loads each background image (html tag + src), creates a canvas and draws the loaded image on it
+let fetchTheme = num => {
+    return fetch(`../src/api/userpic.php?theme=${num}`)
+        .then(data=>data.json());
+}
+
+let getThemeViewsUrls = data => {
+    let json = data;
+    let url = [];
+    for(let key in data)
+    {
+        let innerUrl = [];
+        for(let key2 in data[key])
+        {
+            if(key2 === 'url') {
+                innerUrl.push(data[key][key2]);
+                innerUrl.push(extractNum(key));
+            }
+        }
+        url.push(innerUrl);
+    }
+    json.arrOfUrl = url;
+    return new Promise(resolve => resolve(json));
+}
+
+let displayTheme = data => {
+    let url = data.arrOfUrl;
+    let canvases = url.map((el, i) => {
+        // Loads each background image (html tag + src), creates a canvas and draws the loaded image on it
 // with original image aspect ratio (aRatio = w / h)
 // + calculates each inner frame position & size
-let loadCanvasImgs = imageFolder.map((el, i) => {
-    return loadImage(`images/${el[0]}`).then(img => {
-        let aRatio = aspectRatioCalc(img.width, img.height);
-        let page = pages[el[1]];
-        img.setAttribute("data-page", `${el[1]}`);
-        imgToCanvas(img, createCanvas("canvas1", aRatio, canvasHeight), page);
-        return new Promise(resolve => resolve(img));
-    }).then((img) => {
-        let page = img.dataset.page;
-        let dRatio = sizeDownRatio(img, canvasHeight);
-        console.log("this dRatio :" + dRatio);
-        setDivCssAndAttachToDom(album1, dRatio, pages[page].id);
-        return new Promise(resolve => resolve())
-    });
-});
+        return loadImage(`../${el[0]}`)
+            .then((img) => {
+                let aRatio = aspectRatioCalc(img.width, img.height);
+                let page = pages[el[1]];
+                img.setAttribute("data-page", `${el[1]}`);
+                imgToCanvas(img, createCanvas("canvas1", aRatio, canvasHeight), page);
+                return new Promise(resolve => resolve(img));
+            })
+            .then((img) => {
+                let page = img.dataset.page;
+                let dRatio = sizeDownRatio(img, canvasHeight);
+                setDivCssAndAttachToDom(data, dRatio, pages[page].id);
+                return new Promise(resolve => resolve())
+            });
+    })
+    // Stores loaded images and canvases promises
+    let results = Promise.all(canvases);
+    return new Promise(resolve => resolve(results));
+}
 
-// Stores loaded images and canvases promises
-let results = Promise.all(loadCanvasImgs);
-
-// On fulfillment attach event listeners to inner frames + rest of elements on page
-results.then(() => {
-
+let initWorkSpace = () => {
     const dropzones = document.getElementsByClassName('droppable');
 
     flickleft.addEventListener('click', flicker);
@@ -473,12 +521,16 @@ results.then(() => {
 
     })
 
+
     reloadSavedAlbumForm.addEventListener('submit', function (e) {
         e.preventDefault();
 
         loadAlbum('../src/api/userpic.php?album=1')
-            .then(data=>reloadAllSavedCropperInstances(retrocycle(JSON.parse(data))))
-        //console.log(cropperSavedInstance);
+            .then(data=>{
+                console.log(data[1]);
+                return retrocycle(JSON.parse(data[0]))
+            })
+            .then(data=>reloadAllSavedCropperInstances(data))
     })
 
     // Store container date on save
@@ -565,6 +617,7 @@ results.then(() => {
                     if (currEl) {
                         cropperInstanceStore[i].replace(img.src);
                         cropperInstanceStore[i].originalUrl = img.src;
+                        console.log(cropperInstanceStore[i].ctnr);
                     } else {
                         console.log("I am being initialized")
                         // We give to the html img tag the src of the newly created image object
@@ -587,7 +640,69 @@ results.then(() => {
         })
 
     });
-})
+}
+
+
+// Fetch user albums
+fetch('../src/api/userpic.php?album=all&Uid=1')
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        return  data.map(el => {
+            let div = makeDivHtmlTag("album-grid-album");
+            let p = document.createElement("p");
+            p.innerText = el.title;
+            div.appendChild(p);
+            div.setAttribute("data-cpid", el["customized_product_id"]);
+            div.setAttribute("data-thid", el["theme_id"]);
+            albumgridcontainer.appendChild(div);
+            console.log(div);
+        })
+    })
+    .then(() => {
+        // Fetch user pictures (then displayed on side bar)
+         fetch('../src/api/userpic.php?pics=all&Uid=1')
+            .then(response => response.json())
+            .then(picurl => {
+                let arr = []
+                keyfinder(picurl, "picture_code_and_ext", arr);
+                let pictures = arr.map(el => {
+                     loadImage('user_pictures/' + el)
+                        .then(img => {
+                            img.className = "draggable";
+                            img.draggable = true;
+                            let div = makeDivHtmlTag("photo-grid-photo");//.appendChild(img);
+                            div.appendChild(img);
+                            photogridcontainer.appendChild(div);
+                        })
+                })
+            });
+        })
+    // once pictures are loaded, set up toggle between album and photo view
+    .then(() => {
+        forEach(document.getElementsByClassName("album-grid-album"), el => {
+            el.addEventListener('click', (e) => {
+                let albumId = e.currentTarget.dataset.cpid;
+                let themeId = e.currentTarget.dataset.thid;
+                albumgridcontainer.style.display = "none";
+                photogridcontainer.style.display = "flex";
+                fetchTheme(themeId)
+                    .then(data => getThemeViewsUrls(data))
+                    .then(data => displayTheme(data))
+                    .then(() => initWorkSpace())
+                    .then(() => {
+                        fetch(`../src/api/userpic.php?album=${albumId}&Uid=1`)
+                            .then(response=>response.json())
+                            .then(data=>{
+                                console.log(retrocycle(JSON.parse(data[0])));
+                                return retrocycle(JSON.parse(data[0]))
+                            })
+                            .then(data=>reloadAllSavedCropperInstances(data))
+                    })
+
+            })
+        })
+    })
 
 
 let ratio;

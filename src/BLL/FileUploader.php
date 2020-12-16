@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Controller;
+namespace App\BLL;
 
 
 class FileUploader
@@ -15,11 +15,6 @@ class FileUploader
         IMAGETYPE_PNG
     ];
     protected $fileExt;
-
-    /*$target_folder = "public/photos/";
-$photo_id = sha1_file($_FILES["file"]["tmp_name"]);
-$new_path = $target_folder . $photo_id . $extension;
-move_uploaded_file($_FILES["file"]["tmp_name"], $new_path);*/
 
 
     public function __construct($path)

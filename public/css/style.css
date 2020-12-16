@@ -822,12 +822,27 @@ button:hover {
     margin-bottom: 10px;
 }
 
+.album-grid-album {
+    width: 300px;
+    height: 150px;
+    background-color: #B0D1CE;
+    margin-bottom: 10px;
+}
+
 .photo-grid-photo-container {
-    display: flex;
+    display: none;
     flex-wrap: wrap;
     width: 100%;
     margin-bottom: 100px;
     justify-content: space-between;
+}
+
+.album-grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-bottom: 100px;
+    justify-content: center;
 }
 
 .page-perso-barre-latérale-photo-container-photo-selection {

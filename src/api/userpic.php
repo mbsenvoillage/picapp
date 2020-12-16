@@ -2,12 +2,17 @@
 require dirname(dirname(__DIR__)) . '/vendor/autoload.php';
 
 use App\DAL\ConnectionWizard;
+use App\BLL;
+
+$controller = new BLL\CustomizedProductController();
 
 $db = new \App\DAL\ConnectionWizard();
 $connection = $db->getConnection();
 $userId = 1;
 $picDir = "user_pictures/";
 $productId = 1;
+
+header('Content-Type: application/json');
 
 if($_SERVER['REQUEST_METHOD'] === 'POST')
 {
@@ -20,42 +25,33 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 
     return false;
 }
-elseif($_GET['album'])
+if(isset($_GET['album']) && isset($_GET['Uid']))
 {
-    $sql = "select * from customized_products where customized_product_id = :productId ";
-    $stmt = $connection->prepare($sql);
-    $stmt->bindParam(':productId', $productId);
-    $stmt->execute();
+    $album = $_GET['album'];
+    $Uid = $_GET['Uid'];
 
-    $result =  array();
-
-    while ($res = $stmt->fetch(\PDO::FETCH_ASSOC))
+    if(strcasecmp($album, 'all') == 0)
     {
-        array_push($result, $res['cust_p_data']);
-    }
 
-    header('Content-Type: application/json');
-    echo json_encode($result);
+        echo $controller->fetchAlbums($Uid, true);
+    }
+    else
+    {
+
+        echo $controller->fetchAlbums($Uid, false, $album);
+    }
 
     return false;
 }
-else
+if (isset($_GET['theme']))
 {
-    $sql = "select picture_code_and_ext from user_account_original_pictures where account_id = :id";
+    $themeId = $_GET['theme'];
+    echo $controller->fetchTheme($themeId);
+}
+if (isset($_GET['pics']))
+{
+    $Uid = $_GET['Uid'];
+    echo $controller->fetchPictures($userId);
 
-    $stmt = $connection->prepare($sql);
-    $stmt->bindParam(':id', $userId);
-    $stmt->execute();
-
-
-
-    $picArr = array();
-
-    while ($pic = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-        array_push($picArr,$picDir . $pic['picture_code_and_ext']);
-    }
-
-    header('Content-Type: application/json');
-    echo json_encode($picArr);
 }
 

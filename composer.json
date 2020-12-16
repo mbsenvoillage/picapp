@@ -15,6 +15,7 @@
     "require": {
       "ext-exif": "*",
       "ext-pdo": "*",
-        "ext-json": "*"
+        "ext-json": "*",
+        "nilportugues/sql-query-builder": "^1.8"
     }
 }

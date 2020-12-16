@@ -4,7 +4,7 @@ require dirname(__DIR__) . '/vendor/autoload.php';
 //set max upload size
 $max = 2000000;
 
-use App\Controller\FileUploader;
+use App\BLL\FileUploader;
 
 
 
@@ -21,12 +21,6 @@ if(isset($_POST['submit']))
         echo $t->getMessage();
     }
 }
-
-
-
-
-
-
 
 ?>
 <!DOCTYPE html>
@@ -50,7 +44,7 @@ if(isset($_POST['submit']))
 <div class="page-perso-zone-edition-main-container">
     <div class="page-perso-barre-latérale">
         <div class="page-perso-barre-latérale-photo-container">
-            <div class="page-perso-barre-latérale-photo-container-theme-selection">
+            <!--<div class="page-perso-barre-latérale-photo-container-theme-selection">
                 <div class="page-perso-barre-latérale-theme-selection-title">
                     <p class="step-num">1.</p>
                     <p>Je sélectionne mon thème</p>
@@ -69,18 +63,29 @@ if(isset($_POST['submit']))
                         <p class="theme-name-txt">Classique</p>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <div class="page-perso-barre-latérale-photo-container-photo-selection">
-                <div class="page-perso-barre-latérale-photo-selection-title">
+                <!--<div class="page-perso-barre-latérale-photo-selection-title">
                     <p class="step-num">2.</p>
                     <p>Je personnalise avec mes photos</p>
-                </div>
+                </div>-->
                 <div class="page-perso-barre-latérale-photo-selection-photo-grid-container">
+                    <div class="album-grid-container">
+                        <!--<div class="album-grid-album">
+                            <p>Album1</p>
+                        </div>
+                        <div class="album-grid-album">
+                            <p>Album1</p>
+                        </div>
+                        <div class="album-grid-album">
+                            <p>Album1</p>
+                        </div>-->
+
+                    </div>
                     <div class="photo-grid-photo-container">
-                        <!-- Pictures displayed here will be set as css background-->
                         <?php
-                        require '../src/DAL/DisplayImagesFromFolder.php';
-                        ?>
+/*                        require '../src/DAL/DisplayImagesFromFolder.php';
+                        */?>
 
                     </div>
                 </div>
@@ -88,17 +93,16 @@ if(isset($_POST['submit']))
             </div>
         </div>
         <div class="page-perso-barre-latérale-buttons-container">
-            <div class="button-wrapper">
+            <!--<div class="button-wrapper">
                 <button>commander</button>
-            </div>
+            </div>-->
             <div class="button-wrapper">
                 <form id="saveAlbumForm" method="post" enctype="multipart/form-data">
                     <input type="submit" value="Sauvegarder">
                 </form>
-                <button>sauvegarder</button>
+                <!--<button>sauvegarder</button>-->
             </div>
             <div class="button-wrapper">
-                <!--<button id="img-upload-btn">uploader</button>-->
 
             </div>
         </div>
@@ -173,9 +177,7 @@ if(isset($_POST['submit']))
                 <div class="single-page-container">
                     <div class="single-page-photo-container">
                         <div class="draggable-zone" id="page-1">
-                            <!--<div class="canvas-container droppable" id="p1-container">
 
-                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -185,27 +187,6 @@ if(isset($_POST['submit']))
                 <div class="single-page-container">
                     <div class="single-page-photo-container">
                         <div class="draggable-zone" id="page-2" style="visibility: hidden">
-                            <!--
-
-                            <div id="p13-1-container" class="droppable" >
-
-                            </div>
-                            <div id="p13-2-container"  style="width: 111px; height: 166px;" class="droppable">
-
-                            </div>
-                            <div id="p13-3-container" class="droppable">
-
-                            </div>
-                            <div id="p13-4-container" class="droppable">
-
-                            </div>
-                            <div id="p13-5-container" class="droppable">
-
-                            </div>
-                            <div id="p13-6-container" class="droppable">
-
-                            </div>
-                            -->
 
 
                         </div>
@@ -217,27 +198,6 @@ if(isset($_POST['submit']))
                 <div class="single-page-container">
                     <div class="single-page-photo-container">
                         <div class="draggable-zone" id="page-3" style="visibility: hidden">
-                            <!--
-
-                            <div id="p13-1-container" class="droppable" >
-
-                            </div>
-                            <div id="p13-2-container"  style="width: 111px; height: 166px;" class="droppable">
-
-                            </div>
-                            <div id="p13-3-container" class="droppable">
-
-                            </div>
-                            <div id="p13-4-container" class="droppable">
-
-                            </div>
-                            <div id="p13-5-container" class="droppable">
-
-                            </div>
-                            <div id="p13-6-container" class="droppable">
-
-                            </div>
-                            -->
 
 
                         </div>
@@ -249,27 +209,6 @@ if(isset($_POST['submit']))
                 <div class="single-page-container">
                     <div class="single-page-photo-container">
                         <div class="draggable-zone" id="page-4" style="visibility: hidden">
-                            <!--
-
-                            <div id="p13-1-container" class="droppable" >
-
-                            </div>
-                            <div id="p13-2-container"  style="width: 111px; height: 166px;" class="droppable">
-
-                            </div>
-                            <div id="p13-3-container" class="droppable">
-
-                            </div>
-                            <div id="p13-4-container" class="droppable">
-
-                            </div>
-                            <div id="p13-5-container" class="droppable">
-
-                            </div>
-                            <div id="p13-6-container" class="droppable">
-
-                            </div>
-                            -->
 
 
                         </div>
