@@ -8,7 +8,7 @@ use App\BLL\FileUploader;
 
 
 
-if(isset($_POST['submit']))
+/*if(isset($_POST['submit']))
 {
     $destination = '../public/user_pictures/';
     try {
@@ -20,7 +20,7 @@ if(isset($_POST['submit']))
     {
         echo $t->getMessage();
     }
-}
+}*/
 
 ?>
 <!DOCTYPE html>
@@ -97,30 +97,31 @@ if(isset($_POST['submit']))
                 <button>commander</button>
             </div>-->
             <div class="button-wrapper">
-                <form id="saveAlbumForm" method="post" enctype="multipart/form-data">
-                    <input type="submit" value="Sauvegarder">
-                </form>
+
                 <!--<button>sauvegarder</button>-->
             </div>
             <div class="button-wrapper">
-
             </div>
         </div>
 
     </div>
 
 
-    <div class="page-perso-espace-travail" id="test">
-        <button id="destroyall">Destroy all croppers</button>
-        <button id="reload">Reload save</button>
-        <form name="upload" action="page_perso.php" method="post" enctype="multipart/form-data">
+    <div class="page-perso-espace-travail" id="workspace">
+        <form name="upload" id="uploadpicform">
             <input type="hidden" name="MAX_FILE_SIZE" value="<?= $max?>">
             <input type="file" accept="image/jpg, image/png, image/jpeg" name="uploadedimage" id="img-upload-input">
-            <button type="submit" name="submit">Upload</button>
+            <button id="submit" type="submit" name="submit">submit</button>
         </form>
 
-        <form id="loadSavedAlbum" method="get" enctype="multipart/form-data">
-            <input type="submit" value="Load">
+        <form id="newAlbumForm" action="../src/API/userpic.php?album=new" method="post" enctype="multipart/form-data">
+            <label for="albumtitle">
+                <input id="albumtitle" name="albumtitle" type="text" placeholder="titre">
+            </label>
+            <input type="submit" value="Nouvel album">
+        </form>
+        <form id="saveAlbumForm" method="post" enctype="multipart/form-data">
+            <input type="submit" value="Sauvegarder">
         </form>
 
         <?php

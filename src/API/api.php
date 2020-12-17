@@ -1,5 +1,5 @@
 <?php
-namespace App\api;
+namespace App\API;
 
 require dirname(dirname(__DIR__)) . '/vendor/autoload.php';
 

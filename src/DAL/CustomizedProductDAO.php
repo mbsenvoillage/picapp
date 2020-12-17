@@ -29,11 +29,11 @@ interface CustomizedProductDAO
     /**
      * insert Cropper data in customized_products table
      */
-    public function saveCustomizedAlbum(): void;
+    public function saveCustomizedAlbum($albumId, $json, $title, $userid, $productid, $themeid): string;
 
     /**
      * insert user picture url, after file upload
      */
-    public function uploadUserPictures(): void;
+    public function insertUserPictures($filename, $userid): void;
 
 }

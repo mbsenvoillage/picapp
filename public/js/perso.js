@@ -3,8 +3,6 @@ const dragzones = document.getElementsByClassName("draggable-zone"),
     zoomfrwd = document.getElementById('frwd'),
     zoombckwrd = document.getElementById('bckwd'),
     save = document.getElementById("save"),
-    destroyAll = document.getElementById("destroyall"),
-    reload = document.getElementById("reload"),
     canvasHeight = 600,
     flickleft = document.getElementById("flick-left"),
     flickright = document.getElementById("flick-right"),
@@ -15,7 +13,8 @@ const dragzones = document.getElementsByClassName("draggable-zone"),
     photogridcontainer = document.getElementsByClassName("photo-grid-photo-container")[0],
     albumgridcontainer = document.getElementsByClassName("album-grid-container")[0],
     saveAlbumForm = document.getElementById("saveAlbumForm"),
-    reloadSavedAlbumForm = document.getElementById("loadSavedAlbum");
+    uploadpicform = document.getElementById("uploadpicform"),
+    workspace = document.getElementById("workspace");
 
 var cropperInstanceStore = {},
     cropperSavedInstance = {},
@@ -309,7 +308,7 @@ let saveCropperData = (e) => {
     cropperSavedInstance = cropperInstanceStore;
 }
 
-let cropperSetUp = async (htmlEl, ratio) => {
+let cropperSetUp = (htmlEl, ratio) => {
      let cropIns = new Cropper(htmlEl, {
         viewMode: 3,
         data: {},
@@ -365,10 +364,11 @@ let reloadAllSavedCropperInstances = async (store = null) => {
         img.onload = async () => {
             htmlImgTag.setAttribute("src", img.src);
             console.log("zoom ratio : " + zoomRatios[i]);
-            let canvas2Cropper = await cropperSetUp(htmlImgTag, zoomRatios[i]);
+            let canvas2Cropper = cropperSetUp(htmlImgTag, zoomRatios[i]);
             canvas2Cropper.ctnr = cropperSavedInstance[key].ctnr;
             i++;
-            storeCanvasState(canvas2Cropper, htmlImgTag.id);
+            storeCanvasState(canvas2Cropper, imgidx);
+            incrementi();
         };
     }
 }
@@ -443,15 +443,20 @@ let extractNum = (str) => {
     return str.match(regex)[0];
 }
 
-let keyfinder = (obj, k, arr) => {
+let keyfinder = (obj, k, arr, once = false) => {
     if(typeof obj === 'object')
     {
-        //console.log(obj);
-        if(obj.hasOwnProperty(k)) arr.push(obj[k])
-            for (let key in obj)
-            {
-                keyfinder(obj[key], k, arr);
-            }
+        console.log(obj);
+        if(obj.hasOwnProperty(k))
+        {
+            arr.push(obj[k])
+            if(once) return;
+        }
+        for (let key in obj)
+        {
+            if (obj[key] !== null) keyfinder(obj[key], k, arr);
+        }
+
     }
 }
 
@@ -506,37 +511,31 @@ let displayTheme = data => {
     return new Promise(resolve => resolve(results));
 }
 
+
+
 let initWorkSpace = () => {
     const dropzones = document.getElementsByClassName('droppable');
+
 
     flickleft.addEventListener('click', flicker);
     flickright.addEventListener('click', flicker);
     saveAlbumForm.addEventListener('submit', function (e) {
         e.preventDefault();
 
-        console.log(cropperInstanceStore);
+        for(let key in cropperInstanceStore)
+        {
+            cropperInstanceStore[key].ctnr = cropperInstanceStore[key].container.id;
+        }
 
-        postCropperData('../src/api/userpic.php', cropperInstanceStore)
+        let albumId = document.getElementsByClassName("album-grid-album")[0].dataset.cpid;
+
+        postCropperData(`../src/api/userpic.php?album=${albumId}`, cropperInstanceStore)
             .then(data=>console.log(data));
 
     })
 
-
-    reloadSavedAlbumForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        loadAlbum('../src/api/userpic.php?album=1')
-            .then(data=>{
-                console.log(data[1]);
-                return retrocycle(JSON.parse(data[0]))
-            })
-            .then(data=>reloadAllSavedCropperInstances(data))
-    })
-
     // Store container date on save
     save.addEventListener('click', saveCropperData);
-    destroyAll.addEventListener('click', destroyAllCropperInstances);
-    reload.addEventListener('click', reloadAllSavedCropperInstances);
 
     // Associate handler to dragstart event for all items from draggable class + give those pics an ID
     const draggablePics = document.getElementsByClassName('draggable');
@@ -594,7 +593,7 @@ let initWorkSpace = () => {
                 currCropper = cropperInstanceStore[i];
             }
 
-            (function encapsulateCropper(incrementICB, storeCanvasStateCB) {
+            (function encapsulateCropper(storeCanvasStateCB) {
 
                 if (!e.currentTarget.firstElementChild) {
                     htmlImgTag = createHtmlImgTag("droppable", imgidx, {"display": "block", "max-width": "100%"});
@@ -605,41 +604,88 @@ let initWorkSpace = () => {
                 // Get the url of the dragged picture, then create image object
                 // and assign to the src attribute the value of the url
                 let url = e.dataTransfer.getData('URL');
-                let img = new Image();
-                img.src = url;
 
 
                 // When the user drops the picture on the drop area, we created a new image object
                 // we gave it a src attribute
                 // However, img takes time to load, so we use the asynchronous method onload
-                img.onload = async () => {
+                loadImage(url)
+                    .then(async img => {
+                        if (currEl) {
+                            cropperInstanceStore[i].replace(img.src)
+                            cropperInstanceStore[i].originalUrl = img.src;
+                        } else {
+                            console.log("I am being initialized")
+                            // We give to the html img tag the src of the newly created image object
+                            htmlImgTag.setAttribute("src", img.src);
 
-                    if (currEl) {
-                        cropperInstanceStore[i].replace(img.src);
-                        cropperInstanceStore[i].originalUrl = img.src;
-                        console.log(cropperInstanceStore[i].ctnr);
-                    } else {
-                        console.log("I am being initialized")
-                        // We give to the html img tag the src of the newly created image object
-                        htmlImgTag.setAttribute("src", img.src);
-
-                        // We initilialise a new instance of a cropper object
-                        let canvas2Cropper = await cropperSetUp(htmlImgTag);
-                        currCropper = canvas2Cropper;
-                        // When converting to JSON, using cycle.js, self-referencing properties in cropperSavedInstance disappear
-                        // like the container, which references a div. To retrieve later the id of the container (used to reload a saved album)
-                        // we store it in the cropper object
-                        canvas2Cropper.ctnr = e.target.id;
-                        storeCanvasStateCB(canvas2Cropper, imgidx);
+                            // We initilialise a new instance of a cropper object
+                            let canvas2Cropper = await cropperSetUp(htmlImgTag);
+                            currCropper = canvas2Cropper;
+                            // When converting to JSON, using cycle.js, self-referencing properties in cropperSavedInstance disappear
+                            // like the container, which references a div. To retrieve later the id of the container (used to reload a saved album)
+                            // we store it in the cropper object
+                            canvas2Cropper.ctnr = e.target.id;
+                            storeCanvasStateCB(canvas2Cropper, imgidx);
+                            incrementi();
                     }
-                }
+                    })
 
                 e.target.style.backgroundColor = "unset";
 
-            })(incrementi(), storeCanvasState);
+            })(storeCanvasState);
         })
 
     });
+}
+
+
+
+window.onload = function() {
+    uploadpicform.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const formData = new FormData(uploadpicform);
+
+        try {
+            fetch('../src/api/userpic.php?pic=new&uid=1', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(result => {
+                    div = makeDivHtmlTag("messages");
+                    ul = document.createElement("ul");
+                    for(let key in result)
+                    {
+                        if(key !== "id") {
+                            let li = document.createElement("li");
+                            li.innerHTML = result[key];
+                            ul.appendChild(li);
+                        }
+                    }
+                    div.appendChild(ul);
+                    workspace.prepend(div);
+                    setTimeout(() => document.getElementsByClassName("messages")[0].remove(), 1000);
+                    if(result.id) {
+                        loadImage('user_pictures/' + result.id)
+                            .then(img => {
+                                img.className = "draggable";
+                                img.draggable = true;
+                                let div = makeDivHtmlTag("photo-grid-photo");
+                                div.appendChild(img);
+                                photogridcontainer.appendChild(div);
+                            })
+                    }
+
+                });
+        } catch(error) {
+            console.log(error);
+        }
+
+        uploadpicform.reset();
+
+    })
+
 }
 
 
@@ -697,9 +743,15 @@ fetch('../src/api/userpic.php?album=all&Uid=1')
                                 console.log(retrocycle(JSON.parse(data[0])));
                                 return retrocycle(JSON.parse(data[0]))
                             })
-                            .then(data=>reloadAllSavedCropperInstances(data))
+                            .then(data=>
+                            {
+                                if(data !== null)
+                                {
+                                    let arrofkeys = Object.keys(data);
+                                    if (data[arrofkeys[0]].hasOwnProperty("url")) reloadAllSavedCropperInstances(data);
+                                }
+                            })
                     })
-
             })
         })
     })

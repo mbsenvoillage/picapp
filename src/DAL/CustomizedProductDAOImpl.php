@@ -115,14 +115,53 @@ class CustomizedProductDAOImpl implements CustomizedProductDAO
         }*/
     }
 
-    public function saveCustomizedAlbum(): void
+    public function saveCustomizedAlbum($albumId, $json, $title, $userid, $productid, $themeid): string
     {
-        // TODO: Implement saveCustomizedAlbum() method.
+
+        if($albumId && $json)
+        {
+            $query = $this->builder->update()
+                ->setTable('customized_products')
+                ->setValues(['cust_p_data' => $json])
+                ->where()
+                ->equals('customized_product_id', $albumId)
+                ->end();
+            $stmt = $this->prepare($this->builder->write($query));
+
+            $stmt->execute([':v1' => $json, ':v2' => $albumId]);
+
+        }
+        else
+        {
+           $query = $this->builder->insert()
+           ->setTable('customized_products')
+           ->setValues([
+               'user_id' => $userid,
+               'product_id' => $productid,
+               'theme_id' => $themeid,
+               'title' => $title
+           ])
+           ->where()
+           ->equals('user_id', $userid)
+           ->end();
+            $stmt = $this->prepare($this->builder->write($query));
+            $stmt->execute([':v1' => $userid, ':v2' => $productid, ':v3' => $themeid, ':v4' => $title]);
+        }
+
+        return 'success';
+
     }
 
-    public function uploadUserPictures(): void
+    public function insertUserPictures($filename, $userid): void
     {
-        // TODO: Implement uploadUserPictures() method.
+        $query = $this->builder->insert()
+            ->setTable('user_account_original_pictures')
+            ->setValues([
+                'picture_code_and_ext' => $filename,
+                'account_id' => $userid
+            ]);
+        $stmt = $this->prepare($this->builder->write($query));
+        $stmt->execute([':v1' => $filename, ':v2' => $userid]);
     }
 
 }

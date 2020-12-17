@@ -6,7 +6,7 @@ namespace App\BLL;
 
 use App\DAL\DAOFactory;
 
-class CustomizedProductController
+class CustomizedProductManager
 {
 
     private $custProdCtlr;
@@ -30,6 +30,16 @@ class CustomizedProductController
     public function fetchPictures($userid)
     {
         return json_encode($this->custProdCtlr->getUserPictures($userid));
+    }
+
+    public function saveAlbum($albumId = null, $json = null, $title = null, $userid = null, $productid = null, $themeid = null)
+    {
+        return $this->custProdCtlr->saveCustomizedAlbum($albumId, $json, $title, $userid, $productid, $themeid);
+    }
+
+    public function addPicture($filename, $userid)
+    {
+        $this->custProdCtlr->insertUserPictures($filename, $userid);
     }
 
 }

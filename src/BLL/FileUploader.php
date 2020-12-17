@@ -15,6 +15,7 @@ class FileUploader
         IMAGETYPE_PNG
     ];
     protected $fileExt;
+    protected $newName;
 
 
     public function __construct($path)
@@ -56,11 +57,13 @@ class FileUploader
      */
     public function moveFile($file)
     {
-        $success = move_uploaded_file($file['tmp_name'], $this->destination . $this->renameFile($file) . $this->fileExt);
+        $this->newName = $this->renameFile($file) . $this->fileExt;
+        $success = move_uploaded_file($file['tmp_name'], $this->destination . $this->newName);
         if($success)
         {
             $msg = $file['name'] . ' a été transféré dans votre photothèque!';
             array_push($this->messages, $msg);
+            $this->messages['id'] = $this->newName;
         }
         else
         {
@@ -159,5 +162,15 @@ class FileUploader
         // number_format takes 2 args. 1) value to be formatted 2) number of decimal places
         return number_format($this->max / 1024, 1) . ' KB';
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPictureFileName()
+    {
+        return $this->newName;
+    }
+
+
 
 }
