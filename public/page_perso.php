@@ -235,7 +235,5 @@ use App\BLL\FileUploader;
 <script src="js/app.js"></script>
 <script src="js/perso.js"></script>
 
-<!--<script type="module"  src="js/productCustom/cust-p_ctrl.js"></script>-->
-
 </body>
 </html>

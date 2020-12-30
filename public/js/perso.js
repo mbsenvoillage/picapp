@@ -33,11 +33,7 @@ let imageFolder = [["Album_HONORE_02.png", 2], ["Album_HONORE_03.png", 1], ["Alb
 
 // Draws the page mask
 let drawImageOnCanvas = function (cnv, ctx, img, sizedowntoratio) {
-    //let wRatio = cnv.width / img.width;
-    //let hRatio = cnv.height / img.height;
-    //let ratio = Math.min(wRatio, hRatio);
     ctx.clearRect(0, 0, cnv.width, cnv.height);
-    //ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, img.width * ratio, img.height * ratio);
     ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, cnv.width, cnv.height);
 }
 
@@ -78,7 +74,7 @@ let makeImg = src => {
 }
 
 let aspectRatioCalc = (imgWidth, imgHeight) => {
-    return imgWidth / imgHeight;
+    return  imgWidth / imgHeight;
 }
 
 
@@ -148,36 +144,36 @@ let album1 = {
         "2" : {
             "width" : 636,
             "height" : 943,
-            "top" : 257,
-            "left" : 2383,
+            "top" : 280,
+            "left" : 2410,
             "angle" : 4
         },
         "3" : {
             "width" : 700,
             "height" : 1050,
-            "top" : 1353,
-            "left" : 294,
+            "top" : 1383,
+            "left" : 323,
             "angle" : 4.5
         },
         "4" : {
             "width" : 1245,
             "height" : 830,
-            "top" : 1390,
-            "left" : 1380,
+            "top" : 1363,
+            "left" : 1347,
             "angle" : -3
         },
         "5" : {
             "width" : 1205,
             "height" : 795,
-            "top" : 2400,
-            "left" : 890,
+            "top" : 2372,
+            "left" : 867,
             "angle" : -2
         },
         "6" : {
             "width" : 675,
             "height" : 1000,
-            "top" : 2132,
-            "left" : 2370,
+            "top" : 2152,
+            "left" : 2396,
             "angle" : 4
         }
 
@@ -216,7 +212,9 @@ let setDivCssAndAttachToDom = (obj, sizedownratio, page) => {
                          frame[key3] /= sizedownratio;
                      }
                  }
+                 console.log("hey" + key);
                  let div = makeDivHtmlTag("droppable",`${key}-${key2}-container`);
+                 if(key === "page-3") console.log(frame.width + ' ' + frame.height);
                  assignStyle(div, frame.width, frame.height, frame.top, frame.left, frame.angle, "absolute");
                  if(!div) {
                      throw new Error("Something went wrong")

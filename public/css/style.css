@@ -863,19 +863,6 @@ button:hover {
     object-fit: cover;
 }
 
-/**
-#canvas1 {
-    position: absolute;
-}
-
-#canvas2 {
-    position: absolute;
-    border-radius: 8px;
-    display: block;
-    max-width: 100%;
-}
- */
-
 .canvas-container {
     width: 270px;
     height: 378px;
@@ -886,81 +873,14 @@ button:hover {
 }
 
 .draggable-zone {
-    /*width: 600px;
-    height: 600px;*/
     left: 30%;
     top: 200px;
     position: absolute;
 }
 
-/**
-#page-2 {
-    top: calc(400px + 600px);
-}
-
- */
-
-
 .espace-travail-single-page-main-container {
     height: 1000px;
 }
-
-/**
-#p13-1-container {
-    width: 239.5px;
-    height: 161px;
-    top: 59px;
-    left: 51px;
-    position: absolute;
-}
-
-#p13-2-container {
-    width: 111px;
-    height: 166px;
-    top: 49px;
-    left: 426px;
-    position: absolute;
-    transform: rotate(4deg);
-}
-
-#p13-3-container {
-    width: 125px;
-    height: 187px;
-    top: 242px;
-    position: absolute;
-    left: 58.5px;
-    transform: rotate(4.5deg);
-}
-
-#p13-4-container {
-    position: absolute;
-    width: 222.7px;
-    height: 148.47px;
-    transform: rotate(-3deg);
-    top: 236.6px;
-    left: 237.86px;
-}
-
-#p13-5-container {
-    position: absolute;
-    width: 214.56px;
-    height: 142.21px;
-    left: 153.21px;
-    top: 417.33px;
-    transform: rotate(-2deg);
-}
-
-#p13-6-container {
-    position: absolute;
-    top: 378.39px;
-    width: 120.75px;
-    height: 178.89px;
-    left: 422.97px;
-    transform: rotate(4deg);
-}
-
- */
-
 
 #controls {
     position: absolute;
